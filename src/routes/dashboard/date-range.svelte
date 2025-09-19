@@ -2,7 +2,6 @@
 let { period, start, end, children }: Props = $props();
 
 import { page } from '$app/state';
-import * as _ from 'radashi';
 
 import navigation from '$utils/navigation';
 

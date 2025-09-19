@@ -9,7 +9,7 @@ import * as remote from './data.remote';
 import * as AlertDialog from '$components/ui/alert-dialog';
 import DatePicker from '$components/date-picker.svelte';
 import HoursPicker from '$components/hours-picker.svelte';
-import { Input } from '$components/ui/input';
+import Autocomplete from '$components/autocomplete.svelte';
 
 import DateRange from './date-range.svelte';
 import CustomDateRange from './custom-date-range.svelte';
@@ -92,7 +92,7 @@ async function save() {
 	<AlertDialog.Content>
 		<DatePicker bind:value={date} />
 		<HoursPicker bind:value={hours} />
-		<Input type="text" placeholder="Project" bind:value={project} />
+		<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 			<AlertDialog.Action onclick={save}>Save</AlertDialog.Action>

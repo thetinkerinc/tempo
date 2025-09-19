@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import dayjs from 'dayjs';
+import * as _ from 'radashi';
 
 import { getPrisma } from '$utils/prisma';
 
@@ -51,7 +52,7 @@ async function getProjects(prisma: PrismaClient) {
 			project: true
 		}
 	});
-	return resp.map((p) => p.project);
+	return _.sift(resp.map((p) => p.project));
 }
 
 async function getEntries(

@@ -111,10 +111,15 @@ function clear() {
 <div class="fixed right-10 bottom-10 rounded-full bg-beige px-4 py-2 shadow-md">
 	<div class={['flex items-center gap-4', recording && 'pt-2']}>
 		<button
-			class="size-[29px] cursor-pointer rounded-full border border-black bg-red-500"
+			class={[
+				'size-[29px] cursor-pointer rounded-full border border-black bg-red-500',
+				recording && 'animate-pulse'
+			]}
 			aria-label="Start a session"
 			onclick={startSession}></button>
-		<button class="cursor-pointer" onclick={togglePaused}>
+		<button
+			class={['cursor-pointer transition', !recording && 'opacity-40']}
+			onclick={togglePaused}>
 			{#if paused}
 				<Play size={30} strokeWidth={1} absoluteStrokeWidth={true} class="fill-black" />
 			{:else}
@@ -122,7 +127,7 @@ function clear() {
 			{/if}
 		</button>
 		<button
-			class="size-[25px] cursor-pointer rounded bg-black"
+			class={['size-[25px] cursor-pointer rounded bg-black transition', !recording && 'opacity-40']}
 			aria-label="Finish current session"
 			onclick={finishSession}></button>
 	</div>
@@ -146,10 +151,7 @@ function clear() {
 			<div>Round your session?</div>
 			<div class="flex items-center gap-2">
 				{#each [floor, mid, ceil].filter((n) => n > 0) as rounded}
-					<Button
-						class={[rounded === hours && 'bg-black text-white hover:bg-black hover:text-white']}
-						variant="outline"
-						onclick={round(rounded)}>
+					<Button variant={rounded === hours ? 'default' : 'outline'} onclick={round(rounded)}>
 						{rounded}
 					</Button>
 				{/each}
