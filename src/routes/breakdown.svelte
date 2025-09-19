@@ -13,6 +13,7 @@ import { Input } from '$components/ui/input';
 
 import DateRange from './date-range.svelte';
 import CustomDateRange from './custom-date-range.svelte';
+import ProjectSelect from './project-select.svelte';
 
 import type { Entry } from '$utils/prisma';
 
@@ -55,7 +56,7 @@ async function save() {
 	<div>-</div>
 	<div>{dayjs(data.end).format('MMM D, YYYY')}</div>
 </div>
-<div>
+<div class="flex items-center gap-1">
 	<DateRange>Last Month</DateRange>
 	<DateRange
 		period="this-month"
@@ -70,6 +71,7 @@ async function save() {
 		YTD
 	</DateRange>
 	<CustomDateRange />
+	<ProjectSelect />
 </div>
 <div>
 	{#each data.entries as entry}

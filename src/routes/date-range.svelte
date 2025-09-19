@@ -4,6 +4,8 @@ let { period, start, end, children }: Props = $props();
 import { page } from '$app/state';
 import * as _ from 'radashi';
 
+import navigation from '$utils/navigation';
+
 import { Button } from '$components/ui/button';
 
 import type { Snippet } from 'svelte';
@@ -17,23 +19,16 @@ interface Props {
 
 let selectedPeriod = $derived(page.url.searchParams.get('period'));
 let variant = $derived<'default' | 'outline'>(selectedPeriod == period ? 'default' : 'outline');
-let href = $derived(makeHref());
 
-function makeHref() {
-	const q = new URLSearchParams(
-		_.shake({
-			period,
-			start,
-			end
-		})
-	).toString();
-	if (q) {
-		return '/?' + q;
-	}
-	return '/';
+async function handleDates() {
+	await navigation.updateSearch({
+		period,
+		start,
+		end
+	});
 }
 </script>
 
-<Button {variant} {href}>
+<Button {variant} onclick={handleDates}>
 	{@render children()}
 </Button>
