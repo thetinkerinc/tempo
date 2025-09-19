@@ -1,3 +1,4 @@
+import { redirect } from '@sveltejs/kit';
 import dayjs from 'dayjs';
 
 import { getPrisma } from '$utils/prisma';
@@ -8,7 +9,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async (event) => {
 	const { userId } = event.locals.auth();
 	if (!userId) {
-		return;
+		redirect(307, '/');
 	}
 
 	const prisma = getPrisma();
@@ -20,6 +21,8 @@ export const load: PageServerLoad = async (event) => {
 	const entries = await getEntries(prisma, userId, start, end, project);
 
 	return {
+		start,
+		end,
 		projects,
 		entries
 	};

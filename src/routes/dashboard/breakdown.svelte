@@ -16,6 +16,7 @@ import CustomDateRange from './custom-date-range.svelte';
 import ProjectSelect from './project-select.svelte';
 
 import type { Entry } from '$utils/prisma';
+import type { PageData } from './$types';
 
 let editing = $state<boolean>(false);
 let id = $state<string>('');
@@ -23,7 +24,7 @@ let date = $state<string>('');
 let hours = $state<number>(0);
 let project = $state<string>();
 
-let data = $derived(page.data);
+let data = $derived(page.data as PageData);
 let hoursWorked = $derived(_.sum(data.entries, (e) => e.hours));
 
 function edit(entry: Entry) {
