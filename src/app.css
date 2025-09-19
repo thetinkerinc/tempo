@@ -120,6 +120,11 @@
 	}
 }
 
+@theme {
+	--color-beige: #fff1d7;
+	--color-orange: #fb5c3a;
+}
+
 @utility scrollbar-none {
 	scrollbar-width: none;
 }

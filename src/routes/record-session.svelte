@@ -108,7 +108,7 @@ function clear() {
 }
 </script>
 
-<div class="fixed right-10 bottom-10 rounded-full bg-[#fff1d7] px-4 py-2 shadow-md">
+<div class="fixed right-10 bottom-10 rounded-full bg-beige px-4 py-2 shadow-md">
 	<div class={['flex items-center gap-4', recording && 'pt-2']}>
 		<button
 			class="size-[29px] cursor-pointer rounded-full border border-black bg-red-500"

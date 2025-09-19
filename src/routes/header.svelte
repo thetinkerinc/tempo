@@ -9,7 +9,7 @@ async function logout() {
 }
 </script>
 
-<div class="flex bg-[#fff1d7] px-4 py-2">
+<div class="flex bg-beige px-4 py-2">
 	<div class="flex-auto">
 		<a href="/" class="inline-block">
 			<img src="/logo.png" alt="Hourglass" class="h-[40px] w-[30px]" />

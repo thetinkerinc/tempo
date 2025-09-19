@@ -81,7 +81,7 @@ async function save() {
 			<div class="flex items-center gap-4">
 				<div>{dayjs(entry.date).format('dddd MMM D')}</div>
 				<div>-</div>
-				<div>{entry.hours} hours</div>
+				<div>{entry.hours} hour{entry.hours > 1 ? 's' : ''}</div>
 			</div>
 			<div class="text-gray-500 italic">{entry.project ?? 'No project'}</div>
 		</button>
