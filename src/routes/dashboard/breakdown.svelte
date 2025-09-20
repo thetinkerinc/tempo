@@ -6,6 +6,7 @@ import * as _ from 'radashi';
 
 import * as remote from './data.remote';
 
+import { ScrollArea } from '$components/ui/scroll-area';
 import * as AlertDialog from '$components/ui/alert-dialog';
 import DatePicker from '$components/date-picker.svelte';
 import HoursPicker from '$components/hours-picker.svelte';
@@ -57,7 +58,7 @@ async function save() {
 	<div>-</div>
 	<div>{dayjs(data.end).format('MMM D, YYYY')}</div>
 </div>
-<div class="flex items-center gap-1">
+<div class="my-2 flex items-center gap-1">
 	<DateRange>Last Month</DateRange>
 	<DateRange
 		period="this-month"
@@ -74,10 +75,10 @@ async function save() {
 	<CustomDateRange />
 	<ProjectSelect />
 </div>
-<div>
+<ScrollArea class="h-[200px]" type="auto">
 	{#each data.entries as entry}
 		<button
-			class="w-full rounded-lg border border-gray-200 bg-white px-4 py-1 text-left hover:bg-gray-100"
+			class="mb-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-1 text-left last:mb-0 hover:bg-gray-100"
 			onclick={edit(entry)}>
 			<div class="flex items-center gap-4">
 				<div>{dayjs(entry.date).format('dddd MMM D')}</div>
@@ -87,12 +88,16 @@ async function save() {
 			<div class="text-gray-500 italic">{entry.project ?? 'No project'}</div>
 		</button>
 	{/each}
-</div>
+</ScrollArea>
 <AlertDialog.Root bind:open={editing}>
 	<AlertDialog.Content>
-		<DatePicker bind:value={date} />
+		<div>
+			<DatePicker bind:value={date} />
+		</div>
 		<HoursPicker bind:value={hours} />
-		<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
+		<div class="max-w-[350px]">
+			<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
+		</div>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 			<AlertDialog.Action onclick={save}>Save</AlertDialog.Action>

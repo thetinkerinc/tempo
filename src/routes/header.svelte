@@ -15,13 +15,13 @@ async function logout() {
 			<img src="/logo.png" alt="Hourglass" class="h-[40px] w-[30px]" />
 		</a>
 	</div>
-	<div class="flex items-center gap-4">
+	<div class="flex items-center gap-4 font-bold">
 		<SignedIn>
-			<button onclick={logout}>Log out</button>
+			<button class="cursor-pointer hover:underline" onclick={logout}>Log out</button>
 		</SignedIn>
 		<SignedOut>
-			<a href="/login">Log in</a>
-			<a href="/signup">Sign up</a>
+			<a class="hover:underline" href="/login">Log in</a>
+			<a class="hover:underline" href="/signup">Sign up</a>
 		</SignedOut>
 	</div>
 </div>

@@ -30,7 +30,16 @@ async function addEntry() {
 }
 </script>
 
-<DatePicker bind:value={date} />
-<HoursPicker bind:value={hours} />
-<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
-<Button onclick={addEntry}>Save</Button>
+<div class="flex flex-col gap-2">
+	<div class="text-xl font-bold">Add new entry</div>
+	<div>
+		<DatePicker bind:value={date} />
+	</div>
+	<HoursPicker bind:value={hours} />
+	<div class="max-w-[350px]">
+		<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
+	</div>
+	<div>
+		<Button onclick={addEntry}>Save</Button>
+	</div>
+</div>
