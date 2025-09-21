@@ -125,6 +125,13 @@
 	--color-orange: #fb5c3a;
 }
 
+@layer utilities {
+	.cell-1 {
+		grid-column: 1 / 1;
+		grid-row: 1 / 1;
+	}
+}
+
 @utility scrollbar-none {
 	scrollbar-width: none;
 }

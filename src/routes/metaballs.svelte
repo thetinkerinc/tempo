@@ -1,4 +1,9 @@
 <script lang="ts">
+/*
+   Thanks to Antony Garand for the svg metaballs implementation!
+   https://dev.to/antogarand/svg-metaballs-35pj
+ */
+
 import Metaball from './metaball.svelte';
 
 let innerWidth = $state<number>(0);
