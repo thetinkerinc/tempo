@@ -58,7 +58,7 @@ async function save() {
 	<div>-</div>
 	<div>{dayjs(data.end).format('MMM D, YYYY')}</div>
 </div>
-<div class="my-2 flex items-center gap-1">
+<div class="my-2 flex flex-wrap items-center gap-1">
 	<DateRange>Last Month</DateRange>
 	<DateRange
 		period="this-month"
@@ -75,19 +75,21 @@ async function save() {
 	<CustomDateRange />
 	<ProjectSelect />
 </div>
-<ScrollArea class="h-[200px]" type="auto">
-	{#each data.entries as entry}
-		<button
-			class="mb-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-1 text-left last:mb-0 hover:bg-gray-100"
-			onclick={edit(entry)}>
-			<div class="flex items-center gap-4">
-				<div>{dayjs(entry.date).format('dddd MMM D')}</div>
-				<div>-</div>
-				<div>{entry.hours} hour{entry.hours > 1 ? 's' : ''}</div>
-			</div>
-			<div class="text-gray-500 italic">{entry.project ?? 'No project'}</div>
-		</button>
-	{/each}
+<ScrollArea type="auto">
+	<div class="max-h-[300px]">
+		{#each data.entries as entry}
+			<button
+				class="mb-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-1 text-left last:mb-0 hover:bg-gray-100"
+				onclick={edit(entry)}>
+				<div class="flex items-center gap-4">
+					<div>{dayjs(entry.date).format('dddd MMM D')}</div>
+					<div>-</div>
+					<div>{entry.hours} hour{entry.hours > 1 ? 's' : ''}</div>
+				</div>
+				<div class="text-gray-500 italic">{entry.project ?? 'No project'}</div>
+			</button>
+		{/each}
+	</div>
 </ScrollArea>
 <AlertDialog.Root bind:open={editing}>
 	<AlertDialog.Content>

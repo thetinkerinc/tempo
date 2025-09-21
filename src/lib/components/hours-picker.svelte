@@ -50,17 +50,17 @@ function handleScroll() {
 </script>
 
 <div class="flex items-center gap-3">
-	<div class="relative">
+	<div class="relative overflow-hidden rounded-lg">
 		{#if !atStart}
 			<div
-				class="pointer-events-none absolute left-0 grid h-full w-[40px] content-center justify-start bg-linear-to-r from-white to-transparent"
+				class="pointer-events-none absolute left-0 grid h-full w-[40px] content-center justify-start"
 				transition:fade>
 				<ChevronLeft />
 			</div>
 		{/if}
 		{#if !atEnd}
 			<div
-				class="pointer-events-none absolute right-0 grid h-full w-[40px] content-center justify-end bg-linear-to-l from-white to-transparent"
+				class="pointer-events-none absolute right-0 grid h-full w-[40px] content-center justify-end"
 				transition:fade>
 				<ChevronRight />
 			</div>

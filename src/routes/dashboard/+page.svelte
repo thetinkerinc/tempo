@@ -8,7 +8,7 @@ import RecordSession from './record-session.svelte';
 	<title>Tempo</title>
 </svelte:head>
 <div
-	class="mt-5 grid grid-rows-[auto_auto] gap-4 px-4 lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:gap-8 lg:pr-8">
+	class="mx-auto grid max-w-[1000px] grid-rows-[auto_auto] gap-4 rounded-lg bg-white/20 px-6 pt-4 pb-6 lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:gap-8 lg:pr-8">
 	<div>
 		<AddEntry />
 	</div>

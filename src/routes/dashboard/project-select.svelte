@@ -17,7 +17,7 @@ async function handleProject(project: string) {
 </script>
 
 <Select.Root type="single" allowDeselect={true} onValueChange={handleProject} bind:open bind:value>
-	<Select.Trigger>
+	<Select.Trigger class="bg-white">
 		{value || 'Project'}
 	</Select.Trigger>
 	<Select.Content>
