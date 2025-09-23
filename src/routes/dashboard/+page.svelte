@@ -1,6 +1,6 @@
 <script lang="ts">
-import Breakdown from './breakdown.svelte';
 import AddEntry from './add-entry.svelte';
+import Breakdown from './breakdown.svelte';
 import RecordSession from './record-session.svelte';
 </script>
 

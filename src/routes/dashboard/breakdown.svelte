@@ -4,6 +4,7 @@ import { invalidateAll } from '$app/navigation';
 import dayjs from 'dayjs';
 import * as _ from 'radashi';
 
+import * as m from '$paraglide/messages';
 import * as remote from './data.remote';
 
 import { ScrollArea } from '$components/ui/scroll-area';
@@ -52,25 +53,25 @@ async function save() {
 }
 </script>
 
-<div class="text-xl font-bold">Hours worked: {hoursWorked}</div>
+<div class="text-xl font-bold">{m.breakdown_hours_worked()}: {hoursWorked}</div>
 <div class="flex items-center gap-2">
 	<div>{dayjs(data.start).format('MMM D, YYYY')}</div>
 	<div>-</div>
 	<div>{dayjs(data.end).format('MMM D, YYYY')}</div>
 </div>
 <div class="my-2 flex flex-wrap items-center gap-1">
-	<DateRange>Last Month</DateRange>
+	<DateRange>{m.breakdown_last_month()}</DateRange>
 	<DateRange
 		period="this-month"
 		start={dayjs().startOf('month').toISOString()}
 		end={dayjs().endOf('month').toISOString()}>
-		This month
+		{m.breakdown_this_month()}
 	</DateRange>
 	<DateRange
 		period="ytd"
 		start={dayjs().startOf('year').toISOString()}
 		end={dayjs().endOf('year').toISOString()}>
-		YTD
+		{m.breakdown_ytd()}
 	</DateRange>
 	<CustomDateRange />
 	<ProjectSelect />
@@ -84,9 +85,9 @@ async function save() {
 				<div class="flex items-center gap-4">
 					<div>{dayjs(entry.date).format('dddd MMM D')}</div>
 					<div>-</div>
-					<div>{entry.hours} hour{entry.hours > 1 ? 's' : ''}</div>
+					<div>{m.breakdown_entry_hours({ hours: entry.hours })}</div>
 				</div>
-				<div class="text-gray-500 italic">{entry.project ?? 'No project'}</div>
+				<div class="text-gray-500 italic">{entry.project ?? m.breakdown_entry_no_project()}</div>
 			</button>
 		{/each}
 	</div>
@@ -98,11 +99,14 @@ async function save() {
 		</div>
 		<HoursPicker bind:value={hours} />
 		<div class="max-w-[350px]">
-			<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
+			<Autocomplete
+				placeholder={m.project_select_placeholder()}
+				options={data.projects}
+				bind:value={project} />
 		</div>
 		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action onclick={save}>Save</AlertDialog.Action>
+			<AlertDialog.Cancel>{m.breakdown_edit_cancel()}</AlertDialog.Cancel>
+			<AlertDialog.Action onclick={save}>{m.breakdown_edit_save()}</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

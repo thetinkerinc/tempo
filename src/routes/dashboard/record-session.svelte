@@ -4,6 +4,7 @@ import local from '@thetinkerinc/isolocal';
 import * as _ from 'radashi';
 import { Pause, Play } from '@lucide/svelte';
 
+import * as m from '$paraglide/messages';
 import * as remote from './data.remote';
 
 import * as AlertDialog from '$components/ui/alert-dialog';
@@ -115,7 +116,7 @@ function clear() {
 				'size-[29px] cursor-pointer rounded-full border border-black bg-red-500',
 				recording && 'animate-pulse'
 			]}
-			aria-label="Start a session"
+			aria-label={m.record_start_label()}
 			onclick={startSession}></button>
 		<button
 			class={['cursor-pointer transition', !recording && 'opacity-40']}
@@ -128,7 +129,7 @@ function clear() {
 		</button>
 		<button
 			class={['size-[25px] cursor-pointer rounded bg-black transition', !recording && 'opacity-40']}
-			aria-label="Finish current session"
+			aria-label={m.record_stop_label()}
 			onclick={finishSession}></button>
 	</div>
 	{#if recording}
@@ -141,14 +142,14 @@ function clear() {
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>
-				You worked {sessionLength} hours
+				{m.record_confirm_title({ sessionLength })}
 			</AlertDialog.Title>
 		</AlertDialog.Header>
 		{@const floor = Math.floor(sessionLength)}
 		{@const mid = floor + 0.5}
 		{@const ceil = floor + 1}
 		<div>
-			<div>Round your session?</div>
+			<div>{m.record_confirm_round()}</div>
 			<div class="flex items-center gap-2">
 				{#each [floor, mid, ceil].filter((n) => n > 0) as rounded}
 					<Button variant={rounded === hours ? 'default' : 'outline'} onclick={round(rounded)}>
@@ -158,12 +159,12 @@ function clear() {
 			</div>
 		</div>
 		<div>
-			<label for="project">Save session to a project?</label>
+			<label for="project">{m.record_confirm_project()}</label>
 			<Input id="project" type="text" bind:value={project} />
 		</div>
 		<AlertDialog.Footer>
-			<AlertDialog.Cancel onclick={clear}>Discard</AlertDialog.Cancel>
-			<AlertDialog.Action onclick={save}>Save</AlertDialog.Action>
+			<AlertDialog.Cancel onclick={clear}>{m.record_confirm_discard()}</AlertDialog.Cancel>
+			<AlertDialog.Action onclick={save}>{m.record_confirm_save()}</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

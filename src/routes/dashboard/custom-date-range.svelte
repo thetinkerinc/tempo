@@ -4,6 +4,8 @@ import { getLocalTimeZone } from '@internationalized/date';
 
 import navigation from '$utils/navigation';
 
+import * as m from '$paraglide/messages';
+
 import * as Popover from '$components/ui/popover';
 import { RangeCalendar } from '$components/ui/range-calendar';
 import { Button } from '$components/ui/button';
@@ -30,7 +32,9 @@ async function setDateRange(range: DateRange) {
 <Popover.Root>
 	<Popover.Trigger>
 		{#snippet child({ props })}
-			<Button {variant} {...props}>Custom</Button>
+			<Button {variant} {...props}>
+				{m.breakdown_custom()}
+			</Button>
 		{/snippet}
 	</Popover.Trigger>
 	<Popover.Content class="w-auto p-0">

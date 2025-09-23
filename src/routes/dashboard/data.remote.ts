@@ -4,9 +4,11 @@ import * as v from 'valibot';
 
 import { getPrisma } from '$utils/prisma';
 
+import * as m from '$paraglide/messages';
+
 const entrySchema = v.object({
 	date: v.pipe(v.string(), v.isoTimestamp()),
-	hours: v.pipe(v.number(), v.minValue(1, 'Please specify the number of hours worked')),
+	hours: v.pipe(v.number(), v.minValue(1, m.schema_hours())),
 	project: v.optional(
 		v.pipe(
 			v.string(),

@@ -2,6 +2,7 @@
 import { page } from '$app/state';
 import { invalidateAll } from '$app/navigation';
 
+import * as m from '$paraglide/messages';
 import * as remote from './data.remote';
 
 import DatePicker from '$components/date-picker.svelte';
@@ -31,7 +32,7 @@ async function addEntry() {
 </script>
 
 <div class="flex flex-col gap-2">
-	<div class="text-xl font-bold">Add new entry</div>
+	<div class="text-xl font-bold">{m.add_entry_title()}</div>
 	<div>
 		<DatePicker bind:value={date} />
 	</div>
@@ -40,6 +41,6 @@ async function addEntry() {
 		<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
 	</div>
 	<div>
-		<Button onclick={addEntry}>Save</Button>
+		<Button onclick={addEntry}>{m.add_entry_button()}</Button>
 	</div>
 </div>
