@@ -1,4 +1,5 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from es!"
+	"landing_title_start": "Mantén tu",
+	"landing_description": "Tempo es un registro de tiempo minimalista e hiper-enfocado que no te estorba"
 }

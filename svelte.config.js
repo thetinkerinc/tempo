@@ -10,7 +10,8 @@ const config = {
 			$components: './src/lib/components',
 			$utils: './src/lib/utils',
 			$routes: './src/routes',
-			$prisma: './generated'
+			$prisma: './generated',
+			$paraglide: './src/lib/paraglide'
 		},
 		experimental: {
 			remoteFunctions: true
