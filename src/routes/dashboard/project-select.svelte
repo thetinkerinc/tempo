@@ -23,6 +23,8 @@ async function handleProject(project: string) {
 	<Select.Content>
 		{#each page.data.projects as project}
 			<Select.Item value={project}>{project}</Select.Item>
+		{:else}
+			<div class="text-sm text-gray-500 italic px-2 py-1">No projects</div>
 		{/each}
 	</Select.Content>
 </Select.Root>
