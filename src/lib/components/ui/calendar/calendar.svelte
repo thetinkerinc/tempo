@@ -2,6 +2,7 @@
 import { Calendar as CalendarPrimitive } from 'bits-ui';
 import * as Calendar from './index.js';
 import { cn, type WithoutChildrenOrChild } from '$lib/utils/shadcn.js';
+import { getLocale } from '$paraglide/runtime';
 import type { ButtonVariant } from '../button/button.svelte';
 import { isEqualMonth, type DateValue } from '@internationalized/date';
 import type { Snippet } from 'svelte';
@@ -14,7 +15,7 @@ let {
 	weekdayFormat = 'short',
 	buttonVariant = 'ghost',
 	captionLayout = 'label',
-	locale = 'en-US',
+	locale = getLocale(),
 	months: monthsProp,
 	years,
 	monthFormat: monthFormatProp,

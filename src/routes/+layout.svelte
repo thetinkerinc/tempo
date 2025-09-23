@@ -2,14 +2,18 @@
 import { ClerkProvider } from 'svelte-clerk';
 import { enUS, esMX } from '@clerk/localizations';
 import { getLocale } from '$paraglide/runtime';
+import dayjs from 'dayjs';
 
 import Header from './header.svelte';
 import Metaballs from './metaballs.svelte';
+
+import 'dayjs/locale/es';
 
 import '../app.css';
 
 let { children } = $props();
 
+dayjs.locale(getLocale());
 const clerkLocale = {
 	en: enUS,
 	es: esMX
