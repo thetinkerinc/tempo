@@ -1,5 +1,9 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"landing_title_start": "Keep your",
-	"landing_description": "Tempo is a minimalist and hyper-focused time tracker that stays out of your way"
+	"landing_tagline": "No more rushing or dragging",
+	"landing_description": "Tempo is a minimalist and hyper-focused time tracker that stays out of your way",
+	"header_login": "Log in",
+	"header_signup": "Sign up",
+	"header_logout": "Log out"
 }

@@ -13,10 +13,6 @@ let innerWidth = $state<number>(0);
 <div class="pointer-events-none fixed top-0 left-0 h-full w-full">
 	<svg height="100%" width="100%">
 		<defs>
-			<filter id="shadow">
-				<feDropShadow dx="3" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.5"
-				></feDropShadow>
-			</filter>
 			<filter id="metaball" width="400%" x="-150%" height="400%" y="-150%">
 				<feGaussianBlur id="blurElement" in="SourceGraphic" stdDeviation="10" result="blur"
 				></feGaussianBlur>
@@ -38,7 +34,7 @@ let innerWidth = $state<number>(0);
 			{#each { length: 1 }}
 				<Metaball visible={innerWidth > 1000} />
 			{/each}
-			{#each { length: 1 }}
+			{#each { length: 2 }}
 				<Metaball visible={innerWidth > 1200} />
 			{/each}
 		</g>

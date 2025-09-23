@@ -1,5 +1,9 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"landing_title_start": "Mantén tu",
-	"landing_description": "Tempo es un registro de tiempo minimalista e hiper-enfocado que no te estorba"
+	"landing_tagline": "Sin adelantar ni retrasar",
+	"landing_description": "Tempo es un registro de tiempo minimalista e híper-enfocado que no te estorba",
+	"header_login": "Iniciar sessión",
+	"header_signup": "Registrarse",
+	"header_logout": "Cerrar sessión"
 }
