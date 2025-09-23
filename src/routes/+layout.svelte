@@ -4,6 +4,8 @@ import { enUS, esMX } from '@clerk/localizations';
 import { getLocale } from '$paraglide/runtime';
 import dayjs from 'dayjs';
 
+import { Toaster } from '$components/ui/sonner';
+
 import Header from './header.svelte';
 import Metaballs from './metaballs.svelte';
 
@@ -20,6 +22,7 @@ const clerkLocale = {
 }[getLocale()];
 </script>
 
+<Toaster position="top-right" richColors closeButton />
 <ClerkProvider localization={clerkLocale}>
 	<div class="grid min-h-[100dvh] grid-rows-[auto_1fr]">
 		<Header />

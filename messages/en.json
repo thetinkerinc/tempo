@@ -35,5 +35,7 @@
 	"record_confirm_project": "Save session to a project?",
 	"record_confirm_discard": "Discard",
 	"record_confirm_save": "Save",
-	"schema_hours": "Please specify the number of hours worked"
+	"schema_hours": "Please specify the number of hours worked",
+	"error_generic_message": "We encountered an issue while processing your request. Please reach out if you think something is wrong",
+	"error_generic_action": "Contact"
 }

@@ -2,10 +2,14 @@
 import { page } from '$app/state';
 import { invalidateAll } from '$app/navigation';
 import dayjs from 'dayjs';
+import * as v from 'valibot';
 import * as _ from 'radashi';
+
+import error from '$utils/error';
 
 import * as m from '$paraglide/messages';
 import * as remote from './data.remote';
+import schema from './schema';
 
 import { ScrollArea } from '$components/ui/scroll-area';
 import * as AlertDialog from '$components/ui/alert-dialog';
@@ -40,16 +44,21 @@ function edit(entry: Entry) {
 }
 
 async function save() {
-	await remote.updateEntry({
-		id,
-		data: {
-			date,
-			hours,
-			project
-		}
-	});
-	await invalidateAll();
-	editing = false;
+	try {
+		const entry = v.parse(schema.updateEntry, {
+			id,
+			data: {
+				date,
+				hours,
+				project
+			}
+		});
+		await remote.updateEntry(entry);
+		await invalidateAll();
+		editing = false;
+	} catch (err) {
+		error.notify(err);
+	}
 }
 </script>
 

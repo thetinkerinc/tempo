@@ -1,9 +1,13 @@
 <script lang="ts">
 import { page } from '$app/state';
 import { invalidateAll } from '$app/navigation';
+import * as v from 'valibot';
+
+import error from '$utils/error';
 
 import * as m from '$paraglide/messages';
 import * as remote from './data.remote';
+import schema from './schema';
 
 import DatePicker from '$components/date-picker.svelte';
 import HoursPicker from '$components/hours-picker.svelte';
@@ -19,15 +23,20 @@ let project = $state<string>();
 let data = $derived(page.data as PageData);
 
 async function addEntry() {
-	await remote.addEntry({
-		date,
-		hours,
-		project
-	});
-	date = '';
-	hours = 0;
-	project = undefined;
-	await invalidateAll();
+	try {
+		const entry = v.parse(schema.entry, {
+			date,
+			hours,
+			project
+		});
+		await remote.addEntry(entry);
+		date = '';
+		hours = 0;
+		project = undefined;
+		await invalidateAll();
+	} catch (err) {
+		error.notify(err);
+	}
 }
 </script>
 

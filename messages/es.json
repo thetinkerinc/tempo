@@ -35,5 +35,7 @@
 	"record_confirm_project": "¿Agregar sesión a un proyecto?",
 	"record_confirm_discard": "Descartar",
 	"record_confirm_save": "Guardar",
-	"schema_hours": "Por favor entra las horas que trabajaste"
+	"schema_hours": "Por favor entra las horas que trabajaste",
+	"error_generic_message": "Encontramos un error procesando tu solicitud. Por favor cantáctanos si crees que algo está mal",
+	"error_generic_action": "Contactar"
 }

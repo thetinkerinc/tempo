@@ -1,23 +1,11 @@
 import { error } from '@sveltejs/kit';
 import { command, getRequestEvent } from '$app/server';
-import * as v from 'valibot';
 
 import { getPrisma } from '$utils/prisma';
 
-import * as m from '$paraglide/messages';
+import schema from './schema';
 
-const entrySchema = v.object({
-	date: v.pipe(v.string(), v.isoTimestamp()),
-	hours: v.pipe(v.number(), v.minValue(1, m.schema_hours())),
-	project: v.optional(
-		v.pipe(
-			v.string(),
-			v.transform((s) => (s === '' ? null : s))
-		)
-	)
-});
-
-export const addEntry = command(entrySchema, async (data) => {
+export const addEntry = command(schema.entry, async (data) => {
 	const userId = protect();
 	const prisma = getPrisma();
 	await prisma.entry.create({
@@ -28,22 +16,16 @@ export const addEntry = command(entrySchema, async (data) => {
 	});
 });
 
-export const updateEntry = command(
-	v.object({
-		id: v.string(),
-		data: entrySchema
-	}),
-	async (data) => {
-		protect();
-		const prisma = getPrisma();
-		await prisma.entry.update({
-			where: {
-				id: data.id
-			},
-			data: data.data
-		});
-	}
-);
+export const updateEntry = command(schema.updateEntry, async (data) => {
+	protect();
+	const prisma = getPrisma();
+	await prisma.entry.update({
+		where: {
+			id: data.id
+		},
+		data: data.data
+	});
+});
 
 function protect(): string {
 	const event = getRequestEvent();
