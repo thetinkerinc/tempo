@@ -5,9 +5,7 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter({
-			edge: true
-		}),
+		adapter: adapter(),
 		alias: {
 			$components: './src/lib/components',
 			$utils: './src/lib/utils',
