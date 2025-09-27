@@ -1,6 +1,6 @@
 <script lang="ts">
 import { page } from '$app/state';
-import { invalidateAll } from '$app/navigation';
+import { invalidate } from '$app/navigation';
 import dayjs from 'dayjs';
 import * as v from 'valibot';
 import * as _ from 'radashi';
@@ -54,7 +54,7 @@ async function save() {
 			}
 		});
 		await remote.updateEntry(entry);
-		await invalidateAll();
+		await invalidate('dashboard');
 		editing = false;
 	} catch (err) {
 		error.notify(err);

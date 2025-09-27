@@ -1,29 +1,35 @@
 import { error } from '@sveltejs/kit';
 import { command, getRequestEvent } from '$app/server';
 
-import { getPrisma } from '$utils/prisma';
+import { prisma } from '$utils/prisma';
 
 import schema from './schema';
 
 export const addEntry = command(schema.entry, async (data) => {
 	const userId = protect();
-	const prisma = getPrisma();
 	await prisma.entry.create({
 		data: {
 			user: userId,
 			...data
 		}
 	});
+
+	await prisma.$accelerate.invalidate({
+		tags: ['entries', 'projects']
+	});
 });
 
 export const updateEntry = command(schema.updateEntry, async (data) => {
 	protect();
-	const prisma = getPrisma();
 	await prisma.entry.update({
 		where: {
 			id: data.id
 		},
 		data: data.data
+	});
+
+	await prisma.$accelerate.invalidate({
+		tags: ['entries', 'projects']
 	});
 });
 

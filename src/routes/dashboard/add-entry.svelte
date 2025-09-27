@@ -1,6 +1,6 @@
 <script lang="ts">
 import { page } from '$app/state';
-import { invalidateAll } from '$app/navigation';
+import { invalidate } from '$app/navigation';
 import * as v from 'valibot';
 
 import error from '$utils/error';
@@ -33,7 +33,7 @@ async function addEntry() {
 		date = '';
 		hours = 0;
 		project = undefined;
-		await invalidateAll();
+		await invalidate('dashboard');
 	} catch (err) {
 		error.notify(err);
 	}

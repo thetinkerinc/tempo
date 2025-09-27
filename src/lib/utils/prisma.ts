@@ -3,20 +3,10 @@ import { DATABASE_URL } from '$env/static/private';
 
 import { PrismaClient } from '$prisma/client';
 
-import type { PrismaClient as PrismaClientType } from '@prisma/client';
-
 export type * from '$prisma/client';
 
-let prisma: PrismaClientType;
+const prisma = new PrismaClient({
+	datasourceUrl: DATABASE_URL
+}).$extends(withAccelerate());
 
-function getPrisma() {
-	if (prisma) {
-		return prisma;
-	}
-	prisma = new PrismaClient({
-		datasourceUrl: DATABASE_URL
-	}).$extends(withAccelerate());
-	return prisma;
-}
-
-export { getPrisma };
+export { prisma };

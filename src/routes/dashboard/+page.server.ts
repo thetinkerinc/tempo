@@ -2,9 +2,9 @@ import { redirect } from '@sveltejs/kit';
 import dayjs from 'dayjs';
 import * as _ from 'radashi';
 
-import { getPrisma } from '$utils/prisma';
+import { prisma } from '$utils/prisma';
 
-import type { Prisma, PrismaClient } from '$utils/prisma';
+import type { Prisma } from '$utils/prisma';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
@@ -13,13 +13,16 @@ export const load: PageServerLoad = async (event) => {
 		redirect(307, '/');
 	}
 
-	const prisma = getPrisma();
+	event.depends('dashboard');
+
 	const start = getDate(event.url, 'start');
 	const end = getDate(event.url, 'end');
 	const project = event.url.searchParams.get('project');
 
-	const projects = await getProjects(prisma);
-	const entries = await getEntries(prisma, userId, start, end, project);
+	const [projects, entries] = await Promise.all([
+		getProjects(),
+		getEntries(userId, start, end, project)
+	]);
 
 	return {
 		start,
@@ -40,7 +43,7 @@ function getDate(url: URL, name: 'start' | 'end'): Date {
 	}[name];
 }
 
-async function getProjects(prisma: PrismaClient) {
+async function getProjects() {
 	const resp = await prisma.entry.findMany({
 		where: {
 			project: {
@@ -50,18 +53,16 @@ async function getProjects(prisma: PrismaClient) {
 		distinct: ['project'],
 		select: {
 			project: true
+		},
+		cacheStrategy: {
+			ttl: 60,
+			tags: ['projects']
 		}
 	});
 	return _.sift(resp.map((p) => p.project));
 }
 
-async function getEntries(
-	prisma: PrismaClient,
-	userId: string,
-	start: Date,
-	end: Date,
-	project: string | null
-) {
+async function getEntries(userId: string, start: Date, end: Date, project: string | null) {
 	const where: Prisma.EntryWhereInput = {
 		user: {
 			equals: userId
@@ -80,6 +81,10 @@ async function getEntries(
 		where,
 		orderBy: {
 			date: 'desc'
+		},
+		cacheStrategy: {
+			ttl: 60,
+			tags: ['entries']
 		}
 	});
 }
