@@ -69,12 +69,14 @@ async function save() {
 	<div>{dayjs(data.end).format('MMM D, YYYY')}</div>
 </div>
 <div class="my-2 flex flex-wrap items-center gap-1">
-	<DateRange>{m.breakdown_last_month()}</DateRange>
-	<DateRange
-		period="this-month"
-		start={dayjs().startOf('month').toISOString()}
-		end={dayjs().endOf('month').toISOString()}>
+	<DateRange>
 		{m.breakdown_this_month()}
+	</DateRange>
+	<DateRange
+		period="last-month"
+		start={dayjs().subtract(1, 'month').startOf('month').toISOString()}
+		end={dayjs().subtract(1, 'month').endOf('month').toISOString()}>
+		{m.breakdown_last_month()}
 	</DateRange>
 	<DateRange
 		period="ytd"

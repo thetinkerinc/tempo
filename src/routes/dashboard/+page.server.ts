@@ -38,8 +38,8 @@ function getDate(url: URL, name: 'start' | 'end'): Date {
 		return new Date(dateString);
 	}
 	return {
-		start: dayjs().subtract(1, 'month').startOf('month').toDate(),
-		end: dayjs().subtract(1, 'month').endOf('month').toDate()
+		start: dayjs().startOf('month').toDate(),
+		end: dayjs().endOf('month').toDate()
 	}[name];
 }
 
