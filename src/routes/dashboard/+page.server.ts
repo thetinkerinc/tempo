@@ -53,10 +53,6 @@ async function getProjects() {
 		distinct: ['project'],
 		select: {
 			project: true
-		},
-		cacheStrategy: {
-			ttl: 60,
-			tags: ['projects']
 		}
 	});
 	return _.sift(resp.map((p) => p.project));
@@ -81,10 +77,6 @@ async function getEntries(userId: string, start: Date, end: Date, project: strin
 		where,
 		orderBy: {
 			date: 'desc'
-		},
-		cacheStrategy: {
-			ttl: 60,
-			tags: ['entries']
 		}
 	});
 }

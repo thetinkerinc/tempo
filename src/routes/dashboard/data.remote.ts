@@ -13,10 +13,6 @@ export const addEntry = command(schema.entry, async (data) => {
 			...data
 		}
 	});
-
-	await prisma.$accelerate.invalidate({
-		tags: ['entries', 'projects']
-	});
 });
 
 export const updateEntry = command(schema.updateEntry, async (data) => {
@@ -26,10 +22,6 @@ export const updateEntry = command(schema.updateEntry, async (data) => {
 			id: data.id
 		},
 		data: data.data
-	});
-
-	await prisma.$accelerate.invalidate({
-		tags: ['entries', 'projects']
 	});
 });
 
