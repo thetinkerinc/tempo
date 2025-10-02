@@ -1,5 +1,6 @@
 <script lang="ts">
 import { slide } from 'svelte/transition';
+import { page } from '$app/state';
 import local from '@thetinkerinc/isolocal';
 import * as _ from 'radashi';
 import { Pause, Play } from '@lucide/svelte';
@@ -9,7 +10,9 @@ import * as remote from './data.remote';
 
 import * as AlertDialog from '$components/ui/alert-dialog';
 import { Button } from '$components/ui/button';
-import { Input } from '$components/ui/input';
+import Autocomplete from '$components/autocomplete.svelte';
+
+import type { PageData } from './$types';
 
 let confirming = $state<boolean>(false);
 let recording = $state<boolean>(!!local.sessionStarted);
@@ -18,6 +21,8 @@ let elapsed = $state<string>(format(getElapsed()));
 let sessionLength = $state<number>(0);
 let hours = $state<number>(0);
 let project = $state<string>();
+
+let data = $derived(page.data as PageData);
 
 $effect(() => {
 	const interval = setInterval(() => {
@@ -160,7 +165,11 @@ function clear() {
 		</div>
 		<div>
 			<label for="project">{m.record_confirm_project()}</label>
-			<Input id="project" type="text" bind:value={project} />
+			<Autocomplete
+				id="project"
+				placeholder="Project"
+				options={data.projects}
+				bind:value={project} />
 		</div>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel onclick={clear}>{m.record_confirm_discard()}</AlertDialog.Cancel>

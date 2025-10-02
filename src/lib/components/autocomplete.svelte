@@ -8,6 +8,7 @@ import { Input } from '$components/ui/input';
 interface Props {
 	value: string | undefined;
 	options: string[];
+	id?: string;
 	placeholder?: string;
 }
 
