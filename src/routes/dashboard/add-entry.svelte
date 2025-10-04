@@ -16,7 +16,7 @@ import { Button } from '$components/ui/button';
 
 import type { PageData } from './$types';
 
-let date = $state<string>('');
+let date = $state<string>(new Date().toISOString());
 let hours = $state<number>(0);
 let project = $state<string>();
 
@@ -30,7 +30,7 @@ async function addEntry() {
 			project
 		});
 		await remote.addEntry(entry);
-		date = '';
+		date = new Date().toISOString();
 		hours = 0;
 		project = undefined;
 		await invalidate('dashboard');

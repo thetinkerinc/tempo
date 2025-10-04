@@ -1,4 +1,5 @@
 <script lang="ts">
+import { flip } from 'svelte/animate';
 import { page } from '$app/state';
 import { invalidate } from '$app/navigation';
 import dayjs from 'dayjs';
@@ -89,10 +90,11 @@ async function save() {
 </div>
 <ScrollArea type="auto">
 	<div class="max-h-[300px]">
-		{#each data.entries as entry}
+		{#each data.entries as entry (entry.id)}
 			<button
 				class="mb-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-1 text-left last:mb-0 hover:bg-gray-100"
-				onclick={edit(entry)}>
+				onclick={edit(entry)}
+				animate:flip={{ duration: 200 }}>
 				<div class="flex items-center gap-4">
 					<div>{dayjs(entry.date).format('dddd MMM D')}</div>
 					<div>-</div>
