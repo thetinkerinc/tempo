@@ -12,7 +12,7 @@ model Entry {
   id String @id @default(dbgenerated("gen_random_uuid()"))
   user String
   date DateTime @db.Timestamptz(3)
-  hours Int
+  hours Float
   project String?
 
   @@index(fields: [user])

@@ -8,8 +8,9 @@ import { Button } from '$components/ui/button';
 
 let atStart = $state<boolean>(true);
 let atEnd = $state<boolean>(false);
-let hasHalfSelected = $state<boolean>(false);
 let container = $state<HTMLDivElement>();
+
+let hasHalfSelected = $derived<boolean>(value !== Math.floor(value));
 
 function isHourSelected(h: number) {
 	return value === h || value === h + 0.5;
@@ -24,10 +25,8 @@ function handleHour(h: number) {
 function handleHalf() {
 	if (hasHalfSelected) {
 		value -= 0.5;
-		hasHalfSelected = false;
 	} else {
 		value += 0.5;
-		hasHalfSelected = true;
 	}
 }
 
