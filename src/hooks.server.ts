@@ -3,6 +3,9 @@ import { withClerkHandler } from 'svelte-clerk/server';
 import { paraglideMiddleware } from '$lib/paraglide/server';
 import { addLocalStorage } from '@thetinkerinc/isolocal';
 
+import { PUBLIC_CLERK_PUBLISHABLE_KEY } from '$env/static/public';
+import { CLERK_SECRET_KEY } from '$env/static/private';
+
 import type { Handle } from '@sveltejs/kit';
 
 const handleParaglide: Handle = ({ event, resolve }) =>
@@ -16,7 +19,10 @@ const handleParaglide: Handle = ({ event, resolve }) =>
 
 export const handle: Handle = sequence(
 	handleParaglide,
-	withClerkHandler(),
+	withClerkHandler({
+		publishableKey: PUBLIC_CLERK_PUBLISHABLE_KEY,
+		secretKey: CLERK_SECRET_KEY
+	}),
 	addLocalStorage({
 		sessionPauses: []
 	})
