@@ -4,7 +4,7 @@ import * as v from 'valibot';
 import error from '$utils/error';
 
 import * as m from '$paraglide/messages';
-import * as remote from './data.remote';
+import { getProjects, addEntry } from './data.remote';
 import schema from './schema';
 
 import DatePicker from '$components/date-picker.svelte';
@@ -12,20 +12,18 @@ import HoursPicker from '$components/hours-picker.svelte';
 import Autocomplete from '$components/autocomplete.svelte';
 import { Button } from '$components/ui/button';
 
-const projects = await remote.getProjects();
-
 let date = $state<string>(new Date().toISOString());
 let hours = $state<number>(0);
 let project = $state<string>();
 
-async function addEntry() {
+async function save() {
 	try {
 		const entry = v.parse(schema.entry, {
 			date,
 			hours,
 			project
 		});
-		await remote.addEntry(entry);
+		await addEntry(entry);
 		date = new Date().toISOString();
 		hours = 0;
 		project = undefined;
@@ -42,9 +40,9 @@ async function addEntry() {
 	</div>
 	<HoursPicker bind:value={hours} />
 	<div class="max-w-[350px]">
-		<Autocomplete placeholder="Project" options={projects} bind:value={project} />
+		<Autocomplete placeholder="Project" options={await getProjects()} bind:value={project} />
 	</div>
 	<div>
-		<Button onclick={addEntry}>{m.add_entry_button()}</Button>
+		<Button onclick={save}>{m.add_entry_button()}</Button>
 	</div>
 </div>

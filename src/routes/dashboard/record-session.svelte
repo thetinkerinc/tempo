@@ -6,15 +6,13 @@ import * as _ from 'radashi';
 import { Pause, Play } from '@lucide/svelte';
 
 import * as m from '$paraglide/messages';
-import * as remote from './data.remote';
+import { getProjects, addEntry } from './data.remote';
 
 import * as AlertDialog from '$components/ui/alert-dialog';
 import { Button } from '$components/ui/button';
 import Autocomplete from '$components/autocomplete.svelte';
 
 import type { PageData } from './$types';
-
-const projects = await remote.getProjects();
 
 let confirming = $state<boolean>(false);
 let recording = $state<boolean>(!!local.sessionStarted);
@@ -99,7 +97,7 @@ function round(t: number) {
 }
 
 async function save() {
-	await remote.addEntry({
+	await addEntry({
 		date: new Date().toISOString(),
 		hours,
 		project
@@ -167,7 +165,11 @@ function clear() {
 		</div>
 		<div>
 			<label for="project">{m.record_confirm_project()}</label>
-			<Autocomplete id="project" placeholder="Project" options={projects} bind:value={project} />
+			<Autocomplete
+				id="project"
+				placeholder="Project"
+				options={await getProjects()}
+				bind:value={project} />
 		</div>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel onclick={clear}>{m.record_confirm_discard()}</AlertDialog.Cancel>
