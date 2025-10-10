@@ -14,6 +14,8 @@ import Autocomplete from '$components/autocomplete.svelte';
 
 import type { PageData } from './$types';
 
+const projects = await remote.getProjects();
+
 let confirming = $state<boolean>(false);
 let recording = $state<boolean>(!!local.sessionStarted);
 let paused = $state<boolean>(false);
@@ -165,11 +167,7 @@ function clear() {
 		</div>
 		<div>
 			<label for="project">{m.record_confirm_project()}</label>
-			<Autocomplete
-				id="project"
-				placeholder="Project"
-				options={data.projects}
-				bind:value={project} />
+			<Autocomplete id="project" placeholder="Project" options={projects} bind:value={project} />
 		</div>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel onclick={clear}>{m.record_confirm_discard()}</AlertDialog.Cancel>

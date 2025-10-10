@@ -1,6 +1,4 @@
 <script lang="ts">
-import { page } from '$app/state';
-import { invalidate } from '$app/navigation';
 import * as v from 'valibot';
 
 import error from '$utils/error';
@@ -14,13 +12,11 @@ import HoursPicker from '$components/hours-picker.svelte';
 import Autocomplete from '$components/autocomplete.svelte';
 import { Button } from '$components/ui/button';
 
-import type { PageData } from './$types';
+const projects = await remote.getProjects();
 
 let date = $state<string>(new Date().toISOString());
 let hours = $state<number>(0);
 let project = $state<string>();
-
-let data = $derived(page.data as PageData);
 
 async function addEntry() {
 	try {
@@ -33,7 +29,6 @@ async function addEntry() {
 		date = new Date().toISOString();
 		hours = 0;
 		project = undefined;
-		await invalidate('dashboard');
 	} catch (err) {
 		error.notify(err);
 	}
@@ -47,7 +42,7 @@ async function addEntry() {
 	</div>
 	<HoursPicker bind:value={hours} />
 	<div class="max-w-[350px]">
-		<Autocomplete placeholder="Project" options={data.projects} bind:value={project} />
+		<Autocomplete placeholder="Project" options={projects} bind:value={project} />
 	</div>
 	<div>
 		<Button onclick={addEntry}>{m.add_entry_button()}</Button>

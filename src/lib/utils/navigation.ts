@@ -18,7 +18,6 @@ async function updateSearch(params: { [key: string]: string | undefined }) {
 		query = '?' + query;
 	}
 	await goto(resolve((page.url.pathname + query) as Pathname), {
-		invalidateAll: true,
 		replaceState: true
 	});
 }

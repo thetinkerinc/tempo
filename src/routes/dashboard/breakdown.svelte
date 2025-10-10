@@ -1,15 +1,16 @@
 <script lang="ts">
 import { flip } from 'svelte/animate';
 import { page } from '$app/state';
-import { invalidate } from '$app/navigation';
 import dayjs from 'dayjs';
 import * as v from 'valibot';
 import * as _ from 'radashi';
 
+import { qp } from '$utils/state';
+import utils from '$utils/general';
 import error from '$utils/error';
 
 import * as m from '$paraglide/messages';
-import * as remote from './data.remote';
+import { getEntries, getProjects, updateEntry } from './data.remote';
 import schema from './schema';
 
 import { ScrollArea } from '$components/ui/scroll-area';
@@ -23,7 +24,6 @@ import CustomDateRange from './custom-date-range.svelte';
 import ProjectSelect from './project-select.svelte';
 
 import type { Entry } from '$utils/prisma';
-import type { PageData } from './$types';
 
 let editing = $state<boolean>(false);
 let id = $state<string>('');
@@ -31,8 +31,9 @@ let date = $state<string>('');
 let hours = $state<number>(0);
 let project = $state<string>();
 
-let data = $derived(page.data as PageData);
-let hoursWorked = $derived(_.sum(data.entries, (e) => e.hours));
+let start = $derived(utils.getDate(page.url, 'start'));
+let end = $derived(utils.getDate(page.url, 'end'));
+let hoursWorked = $derived(_.sum(await getEntries(qp()), (e) => e.hours));
 
 function edit(entry: Entry) {
 	return () => {
@@ -54,8 +55,7 @@ async function save() {
 				project
 			}
 		});
-		await remote.updateEntry(entry);
-		await invalidate('dashboard');
+		await updateEntry(entry);
 		editing = false;
 	} catch (err) {
 		error.notify(err);
@@ -63,11 +63,12 @@ async function save() {
 }
 </script>
 
+y
 <div class="text-xl font-bold">{m.breakdown_hours_worked()}: {hoursWorked}</div>
 <div class="flex items-center gap-2">
-	<div>{dayjs(data.start).format('MMM D, YYYY')}</div>
+	<div>{dayjs(start).format('MMM D, YYYY')}</div>
 	<div>-</div>
-	<div>{dayjs(data.end).format('MMM D, YYYY')}</div>
+	<div>{dayjs(end).format('MMM D, YYYY')}</div>
 </div>
 <div class="my-2 flex flex-wrap items-center gap-1">
 	<DateRange>
@@ -90,7 +91,7 @@ async function save() {
 </div>
 <ScrollArea type="auto">
 	<div class="max-h-[300px]">
-		{#each data.entries as entry (entry.id)}
+		{#each await getEntries(qp()) as entry (entry.id)}
 			<button
 				class="mb-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-1 text-left last:mb-0 hover:bg-gray-100"
 				onclick={edit(entry)}
@@ -114,7 +115,7 @@ async function save() {
 		<div class="max-w-[350px]">
 			<Autocomplete
 				placeholder={m.project_select_placeholder()}
-				options={data.projects}
+				options={await getProjects()}
 				bind:value={project} />
 		</div>
 		<AlertDialog.Footer>

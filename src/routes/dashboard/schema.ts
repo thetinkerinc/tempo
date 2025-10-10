@@ -13,6 +13,12 @@ const entry = v.object({
 	)
 });
 
+const getEntries = v.object({
+	start: v.pipe(v.string(), v.isoTimestamp()),
+	end: v.pipe(v.string(), v.isoTimestamp()),
+	project: v.nullish(v.string())
+});
+
 const updateEntry = v.object({
 	id: v.string(),
 	data: entry
@@ -20,5 +26,6 @@ const updateEntry = v.object({
 
 export default {
 	entry,
+	getEntries,
 	updateEntry
 };

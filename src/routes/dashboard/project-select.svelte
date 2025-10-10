@@ -4,6 +4,7 @@ import { page } from '$app/state';
 import navigation from '$utils/navigation';
 
 import * as m from '$paraglide/messages';
+import * as remote from './data.remote';
 
 import * as Select from '$components/ui/select';
 
@@ -23,7 +24,7 @@ async function handleProject(project: string) {
 		{value || m.project_select_placeholder()}
 	</Select.Trigger>
 	<Select.Content>
-		{#each page.data.projects as project}
+		{#each await remote.getProjects() as project}
 			<Select.Item value={project}>{project}</Select.Item>
 		{:else}
 			<div class="text-sm text-gray-500 italic px-2 py-1">
