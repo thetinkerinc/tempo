@@ -1,5 +1,5 @@
 <script lang="ts">
-let { value = $bindable() } = $props();
+let { ...rest } = $props();
 
 import dayjs from 'dayjs';
 import { parseAbsoluteToLocal, now, getLocalTimeZone } from '@internationalized/date';
@@ -11,8 +11,14 @@ import { Calendar } from '$components/ui/calendar';
 
 import type { DateValue } from '@internationalized/date';
 
+let value = $state<string>('');
 let selectedDate = $state<DateValue>(getInitialValue());
 
+$effect(() => {
+	if (selectedDate == null) {
+		selectedDate = getInitialValue();
+	}
+});
 $effect(() => {
 	value = selectedDate.toDate(getLocalTimeZone()).toISOString();
 });
@@ -21,11 +27,7 @@ function getInitialValue() {
 	if (!value) {
 		return now(getLocalTimeZone());
 	}
-	let s = value;
-	if (value instanceof Date) {
-		s = value.toISOString();
-	}
-	return parseAbsoluteToLocal(s);
+	return parseAbsoluteToLocal(value);
 }
 </script>
 
@@ -42,3 +44,4 @@ function getInitialValue() {
 		<Calendar type="single" bind:value={selectedDate} />
 	</Popover.Content>
 </Popover.Root>
+<input class="hidden" bind:value {...rest} />

@@ -1,17 +1,17 @@
 <script lang="ts">
-let { value = $bindable(), options, ...rest }: Props = $props();
+let { options, ...rest }: Props = $props();
 
 import { fade } from 'svelte/transition';
 
 import { Input } from '$components/ui/input';
 
 interface Props {
-	value: string | undefined;
 	options: string[];
 	id?: string;
 	placeholder?: string;
 }
 
+let value = $state<string>();
 let elem = $state<HTMLInputElement | null>(null);
 let open = $state<boolean>(false);
 let isUsingKeyboard = $state<boolean>(false);

@@ -1,16 +1,23 @@
 <script lang="ts">
-let { value = $bindable() } = $props();
+let { onchange, ...rest } = $props();
 
 import { fade } from 'svelte/transition';
 import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 
 import { Button } from '$components/ui/button';
 
+let value = $state<number>(0);
 let atStart = $state<boolean>(true);
 let atEnd = $state<boolean>(false);
 let container = $state<HTMLDivElement>();
 
 let hasHalfSelected = $derived<boolean>(value !== Math.floor(value));
+
+$effect(() => {
+	if (value == null) {
+		value = 0;
+	}
+});
 
 function isHourSelected(h: number) {
 	return value === h || value === h + 0.5;
@@ -19,6 +26,7 @@ function isHourSelected(h: number) {
 function handleHour(h: number) {
 	return () => {
 		value = h + +hasHalfSelected * 0.5;
+		onchange?.(value);
 	};
 }
 
@@ -79,3 +87,4 @@ function handleScroll() {
 	</div>
 	<Button variant={hasHalfSelected ? 'default' : 'outline'} onclick={handleHalf}>+.5</Button>
 </div>
+<input class="hidden" bind:value {...rest} />

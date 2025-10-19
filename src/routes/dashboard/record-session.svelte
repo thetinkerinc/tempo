@@ -1,28 +1,24 @@
 <script lang="ts">
 import { slide } from 'svelte/transition';
-import { page } from '$app/state';
 import local from '@thetinkerinc/isolocal';
+import { toast } from 'svelte-sonner';
 import * as _ from 'radashi';
 import { Pause, Play } from '@lucide/svelte';
 
 import * as m from '$paraglide/messages';
 import { getProjects, addEntry } from './data.remote';
+import schema from './schema';
 
 import * as AlertDialog from '$components/ui/alert-dialog';
-import { Button } from '$components/ui/button';
 import Autocomplete from '$components/autocomplete.svelte';
 
-import type { PageData } from './$types';
+import RoundedHoursPicker from './rounded-hours-picker.svelte';
 
 let confirming = $state<boolean>(false);
 let recording = $state<boolean>(!!local.sessionStarted);
 let paused = $state<boolean>(false);
 let elapsed = $state<string>(format(getElapsed()));
 let sessionLength = $state<number>(0);
-let hours = $state<number>(0);
-let project = $state<string>();
-
-let data = $derived(page.data as PageData);
 
 $effect(() => {
 	const interval = setInterval(() => {
@@ -55,7 +51,6 @@ function finishSession() {
 		return;
 	}
 	sessionLength = _.round(getElapsed() / (60 * 60 * 1000), 3);
-	hours = sessionLength;
 	confirming = true;
 	recording = false;
 	paused = false;
@@ -86,30 +81,19 @@ function pad(num: number) {
 	return num.toString().padStart(2, '0');
 }
 
-function round(t: number) {
-	return () => {
-		if (hours === t) {
-			hours = sessionLength;
-		} else {
-			hours = t;
-		}
-	};
-}
-
-async function save() {
-	await addEntry({
-		date: new Date().toISOString(),
-		hours,
-		project
-	});
-	clear();
+async function enhance({ form, submit }: AddEntryEnhanceParams) {
+	try {
+		await submit();
+		form.reset();
+		clear();
+	} catch (_err) {
+		toast.error('Something went wrong while trying to save your session');
+	}
 }
 
 function clear() {
 	local.clear();
 	sessionLength = 0;
-	hours = 0;
-	project = undefined;
 	confirming = false;
 }
 </script>
@@ -150,30 +134,25 @@ function clear() {
 				{m.record_confirm_title({ sessionLength })}
 			</AlertDialog.Title>
 		</AlertDialog.Header>
-		{@const floor = Math.floor(sessionLength)}
-		{@const mid = floor + 0.5}
-		{@const ceil = floor + 1}
-		<div>
-			<div>{m.record_confirm_round()}</div>
-			<div class="flex items-center gap-2">
-				{#each [floor, mid, ceil].filter((n) => n > 0) as rounded}
-					<Button variant={rounded === hours ? 'default' : 'outline'} onclick={round(rounded)}>
-						{rounded}
-					</Button>
-				{/each}
+		{@const form = addEntry.for('add-recorded-session')}
+		{#each form.fields.allIssues() as issue}
+			<div>{issue.message}</div>
+		{/each}
+		<form id="add-recorded-session" {...form.preflight(schema.entry).enhance(enhance)}>
+			<input class="hidden" {...form.fields.date.as('text')} value={new Date().toISOString()} />
+			<RoundedHoursPicker hours={sessionLength} {...form.fields.hours.as('number')} />
+			<div>
+				<label for="project">{m.record_confirm_project()}</label>
+				<Autocomplete
+					placeholder="Project"
+					options={await getProjects()}
+					{...form.fields.project.as('text')} />
 			</div>
-		</div>
-		<div>
-			<label for="project">{m.record_confirm_project()}</label>
-			<Autocomplete
-				id="project"
-				placeholder="Project"
-				options={await getProjects()}
-				bind:value={project} />
-		</div>
+		</form>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel onclick={clear}>{m.record_confirm_discard()}</AlertDialog.Cancel>
-			<AlertDialog.Action onclick={save}>{m.record_confirm_save()}</AlertDialog.Action>
+			<AlertDialog.Action {...form.buttonProps.enhance(enhance)} form="add-recorded-session"
+				>{m.record_confirm_save()}</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

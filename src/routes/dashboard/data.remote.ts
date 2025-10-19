@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { query, command, getRequestEvent } from '$app/server';
+import { query, form, command, getRequestEvent } from '$app/server';
 import * as _ from 'radashi';
 
 import { prisma } from '$utils/prisma';
@@ -49,7 +49,7 @@ export const getEntries = query(schema.getEntries, async (params) => {
 	});
 });
 
-export const addEntry = command(schema.entry, async (data) => {
+export const addEntry = form(schema.entry, async (data) => {
 	const userId = protect();
 	await prisma.entry.create({
 		data: {

@@ -63,7 +63,6 @@ async function save() {
 }
 </script>
 
-y
 <div class="text-xl font-bold">{m.breakdown_hours_worked()}: {hoursWorked}</div>
 <div class="flex items-center gap-2">
 	<div>{dayjs(start).format('MMM D, YYYY')}</div>
