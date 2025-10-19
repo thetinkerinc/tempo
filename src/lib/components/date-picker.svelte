@@ -1,5 +1,5 @@
 <script lang="ts">
-let { ...rest } = $props();
+let { initialValue, ...rest } = $props();
 
 import dayjs from 'dayjs';
 import { parseAbsoluteToLocal, now, getLocalTimeZone } from '@internationalized/date';
@@ -11,7 +11,7 @@ import { Calendar } from '$components/ui/calendar';
 
 import type { DateValue } from '@internationalized/date';
 
-let value = $state<string>('');
+let value = $state<string>(initialValue ?? '');
 let selectedDate = $state<DateValue>(getInitialValue());
 
 $effect(() => {

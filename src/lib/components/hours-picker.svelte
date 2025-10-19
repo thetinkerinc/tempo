@@ -1,12 +1,19 @@
 <script lang="ts">
-let { onchange, ...rest } = $props();
+let { initialValue, onchange, ...rest }: Props = $props();
 
 import { fade } from 'svelte/transition';
 import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 
 import { Button } from '$components/ui/button';
 
-let value = $state<number>(0);
+interface Props {
+	name: string;
+	type: 'number';
+	initialValue?: number;
+	onchange?: (val: number) => void;
+}
+
+let value = $state<number>(initialValue ?? 0);
 let atStart = $state<boolean>(true);
 let atEnd = $state<boolean>(false);
 let container = $state<HTMLDivElement>();

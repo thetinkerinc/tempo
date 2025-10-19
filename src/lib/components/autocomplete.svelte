@@ -1,5 +1,5 @@
 <script lang="ts">
-let { options, ...rest }: Props = $props();
+let { options, initialValue, ...rest }: Props = $props();
 
 import { fade } from 'svelte/transition';
 
@@ -7,11 +7,12 @@ import { Input } from '$components/ui/input';
 
 interface Props {
 	options: string[];
+	initialValue?: string | null;
 	id?: string;
 	placeholder?: string;
 }
 
-let value = $state<string>();
+let value = $state<string | null | undefined>(initialValue);
 let elem = $state<HTMLInputElement | null>(null);
 let open = $state<boolean>(false);
 let isUsingKeyboard = $state<boolean>(false);

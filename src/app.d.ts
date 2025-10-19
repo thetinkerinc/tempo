@@ -6,6 +6,7 @@ import * as remote from '$routes/dashboard/data.remote';
 
 declare global {
 	type AddEntryEnhanceParams = Parameters<Parameters<typeof remote.addEntry.enhance>[0]>[0];
+	type UpdateEntryEnhanceParams = Parameters<Parameters<typeof remote.updateEntry.enhance>[0]>[0];
 
 	namespace App {
 		interface Locals {

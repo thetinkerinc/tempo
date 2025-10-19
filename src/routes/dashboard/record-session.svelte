@@ -135,10 +135,10 @@ function clear() {
 			</AlertDialog.Title>
 		</AlertDialog.Header>
 		{@const form = addEntry.for('add-recorded-session')}
-		{#each form.fields.allIssues() as issue}
-			<div>{issue.message}</div>
-		{/each}
-		<form id="add-recorded-session" {...form.preflight(schema.entry).enhance(enhance)}>
+		<form
+			id="add-recorded-session"
+			class="flex flex-col gap-2"
+			{...form.preflight(schema.entry).enhance(enhance)}>
 			<input class="hidden" {...form.fields.date.as('text')} value={new Date().toISOString()} />
 			<RoundedHoursPicker hours={sessionLength} {...form.fields.hours.as('number')} />
 			<div>

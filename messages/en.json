@@ -26,6 +26,7 @@
 		}
 	],
 	"breakdown_entry_no_project": "No project",
+	"breakdown_edit_title": "Edit entry",
 	"breakdown_edit_cancel": "Cancel",
 	"breakdown_edit_save": "Save",
 	"record_start_label": "Record a session",

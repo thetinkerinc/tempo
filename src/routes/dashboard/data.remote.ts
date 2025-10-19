@@ -59,7 +59,7 @@ export const addEntry = form(schema.entry, async (data) => {
 	});
 });
 
-export const updateEntry = command(schema.updateEntry, async (data) => {
+export const updateEntry = form(schema.updateEntry, async (data) => {
 	protect();
 	await prisma.entry.update({
 		where: {

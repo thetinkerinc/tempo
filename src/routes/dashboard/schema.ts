@@ -8,7 +8,7 @@ const entry = v.object({
 	project: v.optional(
 		v.pipe(
 			v.string(),
-			v.transform((s) => (s === '' ? undefined : s))
+			v.transform((s) => (s === '' ? null : s))
 		)
 	)
 });

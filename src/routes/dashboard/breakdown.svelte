@@ -2,12 +2,11 @@
 import { flip } from 'svelte/animate';
 import { page } from '$app/state';
 import dayjs from 'dayjs';
-import * as v from 'valibot';
+import { toast } from 'svelte-sonner';
 import * as _ from 'radashi';
 
 import { qp } from '$utils/state';
 import utils from '$utils/general';
-import error from '$utils/error';
 
 import * as m from '$paraglide/messages';
 import { getEntries, getProjects, updateEntry } from './data.remote';
@@ -26,39 +25,27 @@ import ProjectSelect from './project-select.svelte';
 import type { Entry } from '$utils/prisma';
 
 let editing = $state<boolean>(false);
-let id = $state<string>('');
-let date = $state<string>('');
-let hours = $state<number>(0);
-let project = $state<string>();
+let entry = $state<Entry>();
 
 let start = $derived(utils.getDate(page.url, 'start'));
 let end = $derived(utils.getDate(page.url, 'end'));
 let hoursWorked = $derived(_.sum(await getEntries(qp()), (e) => e.hours));
 
-function edit(entry: Entry) {
+function edit(e: Entry) {
 	return () => {
-		id = entry.id;
-		date = entry.date.toISOString();
-		hours = entry.hours;
-		project = entry.project ?? undefined;
+		entry = e;
 		editing = true;
 	};
 }
 
-async function save() {
+async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 	try {
-		const entry = v.parse(schema.updateEntry, {
-			id,
-			data: {
-				date,
-				hours,
-				project
-			}
-		});
-		await updateEntry(entry);
+		await submit();
+		form.reset();
 		editing = false;
-	} catch (err) {
-		error.notify(err);
+		entry = undefined;
+	} catch (_err) {
+		toast.error('Something went wrong while trying to pudate your entry');
 	}
 }
 </script>
@@ -107,19 +94,35 @@ async function save() {
 </ScrollArea>
 <AlertDialog.Root bind:open={editing}>
 	<AlertDialog.Content>
-		<div>
-			<DatePicker bind:value={date} />
-		</div>
-		<HoursPicker bind:value={hours} />
-		<div class="max-w-[350px]">
-			<Autocomplete
-				placeholder={m.project_select_placeholder()}
-				options={await getProjects()}
-				bind:value={project} />
-		</div>
+		<AlertDialog.Header>
+			<AlertDialog.Title>
+				{m.breakdown_edit_title()}
+			</AlertDialog.Title>
+		</AlertDialog.Header>
+		<form
+			id="update-entry"
+			class="flex flex-col gap-2"
+			{...updateEntry.preflight(schema.updateEntry).enhance(enhance)}>
+			<input class="hidden" {...updateEntry.fields.id.as('text')} value={entry?.id} />
+			<div>
+				<DatePicker
+					initialValue={entry?.date?.toISOString?.()}
+					{...updateEntry.fields.data.date.as('text')} />
+			</div>
+			<HoursPicker initialValue={entry?.hours} {...updateEntry.fields.data.hours.as('number')} />
+			<div class="max-w-[350px]">
+				<Autocomplete
+					placeholder={m.project_select_placeholder()}
+					options={await getProjects()}
+					initialValue={entry?.project}
+					{...updateEntry.fields.data.project.as('text')} />
+			</div>
+		</form>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>{m.breakdown_edit_cancel()}</AlertDialog.Cancel>
-			<AlertDialog.Action onclick={save}>{m.breakdown_edit_save()}</AlertDialog.Action>
+			<AlertDialog.Action form="update-entry" {...updateEntry.buttonProps.enhance(enhance)}>
+				{m.breakdown_edit_save()}
+			</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>
