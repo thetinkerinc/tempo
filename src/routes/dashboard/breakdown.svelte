@@ -98,7 +98,7 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 						</div>
 					</div>
 					<div
-						class="h-4 self-center justify-self-end rounded shadow"
+						class="h-4 self-center justify-self-end rounded shadow transition-[width]"
 						style="width: {width}%; background: linear-gradient(to left, #ff8559, #ffd3ac {stop}%)">
 					</div>
 				</div>

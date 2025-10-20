@@ -21,8 +21,14 @@ let value = $state<string>(initialValue ?? '');
 let selectedDate = $state<DateValue>(getInitialValue());
 
 $effect(() => {
-	if (selectedDate == null) {
-		selectedDate = getInitialValue();
+	if (!value) {
+		const current = now(getLocalTimeZone());
+		selectedDate = selectedDate.set({
+			hour: current.hour,
+			minute: current.minute,
+			second: current.second,
+			millisecond: current.millisecond
+		});
 	}
 });
 $effect(() => {
