@@ -11,6 +11,9 @@ import type { Handle } from '@sveltejs/kit';
 
 const handleRedirect: Handle = ({ event, resolve }) => {
 	const { userId } = event.locals.auth();
+	if (event.url.pathname === '/' && userId) {
+		redirect(307, '/dashboard');
+	}
 	if (event.url.pathname === '/dashboard' && !userId) {
 		redirect(307, '/');
 	}

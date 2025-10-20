@@ -47,7 +47,8 @@ export default ts.config(
 			}
 		},
 		rules: {
-			'svelte/require-each-key': 'off'
+			'svelte/require-each-key': 'off',
+			'svelte/prefer-writable-derived': 'off'
 		}
 	},
 	{

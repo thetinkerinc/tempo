@@ -1,15 +1,13 @@
-import { error } from '@sveltejs/kit';
-import { query, form, command, getRequestEvent } from '$app/server';
 import * as _ from 'radashi';
 
+import { protectedQuery, protectedForm } from '$utils/auth';
 import { prisma } from '$utils/prisma';
 
 import schema from './schema';
 
 import type { Prisma } from '$utils/prisma';
 
-export const getProjects = query(async () => {
-	protect();
+export const getProjects = protectedQuery(async () => {
 	const resp = await prisma.entry.findMany({
 		where: {
 			project: {
@@ -24,9 +22,7 @@ export const getProjects = query(async () => {
 	return _.sift(resp.map((p) => p.project));
 });
 
-export const getEntries = query(schema.getEntries, async (params) => {
-	const userId = protect();
-
+export const getEntries = protectedQuery(schema.getEntries, async ({ userId, params }) => {
 	const where: Prisma.EntryWhereInput = {
 		user: {
 			equals: userId
@@ -49,8 +45,7 @@ export const getEntries = query(schema.getEntries, async (params) => {
 	});
 });
 
-export const addEntry = form(schema.entry, async (data) => {
-	const userId = protect();
+export const addEntry = protectedForm(schema.entry, async ({ userId, data }) => {
 	await prisma.entry.create({
 		data: {
 			user: userId,
@@ -59,8 +54,7 @@ export const addEntry = form(schema.entry, async (data) => {
 	});
 });
 
-export const updateEntry = form(schema.updateEntry, async (data) => {
-	protect();
+export const updateEntry = protectedForm(schema.updateEntry, async ({ data }) => {
 	await prisma.entry.update({
 		where: {
 			id: data.id
@@ -68,12 +62,3 @@ export const updateEntry = form(schema.updateEntry, async (data) => {
 		data: data.data
 	});
 });
-
-function protect(): string {
-	const event = getRequestEvent();
-	const { userId } = event.locals.auth();
-	if (!userId) {
-		error(403, "You don't have permission to perform this action");
-	}
-	return userId;
-}

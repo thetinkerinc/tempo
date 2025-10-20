@@ -1,5 +1,5 @@
 <script lang="ts">
-let { initialValue, ...rest } = $props();
+let { initialValue, ...rest }: Props = $props();
 
 import dayjs from 'dayjs';
 import { parseAbsoluteToLocal, now, getLocalTimeZone } from '@internationalized/date';
@@ -10,6 +10,12 @@ import { Button } from '$components/ui/button';
 import { Calendar } from '$components/ui/calendar';
 
 import type { DateValue } from '@internationalized/date';
+
+interface Props {
+	initialValue?: string;
+	name: string;
+	type: 'text';
+}
 
 let value = $state<string>(initialValue ?? '');
 let selectedDate = $state<DateValue>(getInitialValue());
