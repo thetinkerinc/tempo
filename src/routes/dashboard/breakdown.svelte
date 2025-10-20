@@ -27,9 +27,11 @@ import type { Entry } from '$utils/prisma';
 let editing = $state<boolean>(false);
 let entry = $state<Entry>();
 
+let entries = $derived(await getEntries(qp()));
 let start = $derived(utils.getDate(page.url, 'start'));
 let end = $derived(utils.getDate(page.url, 'end'));
-let hoursWorked = $derived(_.sum(await getEntries(qp()), (e) => e.hours));
+let hoursWorked = $derived(_.sum(entries, (e) => e.hours));
+let maxHoursWorked = $derived(_.max(entries, (e) => e.hours)?.hours);
 
 function edit(e: Entry) {
 	return () => {
@@ -77,17 +79,29 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 </div>
 <ScrollArea type="auto">
 	<div class="max-h-[300px]">
-		{#each await getEntries(qp()) as entry (entry.id)}
+		{#each entries as entry (entry.id)}
+			{@const width = maxHoursWorked ? Math.round((entry.hours / maxHoursWorked) * 100) : 1}
+			{@const stop = Math.round(10000 / width)}
 			<button
 				class="mb-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-1 text-left last:mb-0 hover:bg-gray-100"
 				onclick={edit(entry)}
 				animate:flip={{ duration: 200 }}>
-				<div class="flex items-center gap-4">
-					<div>{dayjs(entry.date).format('dddd MMM D')}</div>
-					<div>-</div>
-					<div>{m.breakdown_entry_hours({ hours: entry.hours })}</div>
+				<div class="grid grid-cols-[auto_1fr] gap-6">
+					<div>
+						<div class="flex items-center gap-4">
+							<div>{dayjs(entry.date).format('dddd MMM D')}</div>
+							<div>-</div>
+							<div>{m.breakdown_entry_hours({ hours: entry.hours })}</div>
+						</div>
+						<div class="text-gray-500 italic">
+							{entry.project ?? m.breakdown_entry_no_project()}
+						</div>
+					</div>
+					<div
+						class="h-4 self-center justify-self-end rounded shadow"
+						style="width: {width}%; background: linear-gradient(to left, #ff8559, #ffd3ac {stop}%)">
+					</div>
 				</div>
-				<div class="text-gray-500 italic">{entry.project ?? m.breakdown_entry_no_project()}</div>
 			</button>
 		{/each}
 	</div>
