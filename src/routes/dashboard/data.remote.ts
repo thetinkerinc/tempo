@@ -7,9 +7,12 @@ import schema from './schema';
 
 import type { Prisma } from '$utils/prisma';
 
-export const getProjects = protectedQuery(async () => {
+export const getProjects = protectedQuery(async ({ userId }) => {
 	const resp = await prisma.entry.findMany({
 		where: {
+			user: {
+				equals: userId
+			},
 			project: {
 				not: null
 			}

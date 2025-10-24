@@ -51,7 +51,7 @@ function handleWheel(evt: WheelEvent) {
 	}
 	evt.preventDefault();
 	evt.stopPropagation();
-	container.scrollLeft += evt.deltaY;
+	container.scrollLeft += evt.deltaY / 2;
 }
 
 function handleScroll() {
