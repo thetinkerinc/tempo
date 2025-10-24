@@ -28,6 +28,7 @@ let editing = $state<boolean>(false);
 let entry = $state<Entry>();
 
 let entries = $derived(await getEntries(qp()));
+let projects = $derived(await getProjects());
 let start = $derived(utils.getDate(page.url, 'start'));
 let end = $derived(utils.getDate(page.url, 'end'));
 let hoursWorked = $derived(_.sum(entries, (e) => e.hours));
@@ -47,7 +48,7 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 		editing = false;
 		entry = undefined;
 	} catch (_err) {
-		toast.error('Something went wrong while trying to pudate your entry');
+		toast.error('Something went wrong while trying to update your entry');
 	}
 }
 </script>
@@ -127,7 +128,7 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 			<div class="max-w-[350px]">
 				<Autocomplete
 					placeholder={m.project_select_placeholder()}
-					options={await getProjects()}
+					options={projects}
 					initialValue={entry?.project}
 					{...updateEntry.fields.data.project.as('text')} />
 			</div>

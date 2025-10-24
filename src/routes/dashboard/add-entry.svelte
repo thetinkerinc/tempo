@@ -7,6 +7,8 @@ import DatePicker from '$components/date-picker.svelte';
 import HoursPicker from '$components/hours-picker.svelte';
 import Autocomplete from '$components/autocomplete.svelte';
 import { Button } from '$components/ui/button';
+
+let projects = $derived(await getProjects());
 </script>
 
 <form class="flex flex-col gap-2" {...addEntry.preflight(schema.entry)}>
@@ -23,7 +25,7 @@ import { Button } from '$components/ui/button';
 	<div class="max-w-[350px]">
 		<Autocomplete
 			placeholder="Project"
-			options={await getProjects()}
+			options={projects}
 			{...addEntry.fields.project.as('text')} />
 	</div>
 	<div>
