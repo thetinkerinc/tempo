@@ -1,5 +1,5 @@
 <script lang="ts">
-let { options, initialValue, ...rest }: Props = $props();
+let { options, initialValue, empty, ...rest }: Props = $props();
 
 import { fade } from 'svelte/transition';
 
@@ -8,6 +8,7 @@ import { Input } from '$components/ui/input';
 interface Props {
 	options: string[];
 	initialValue?: string | null;
+	empty?: string;
 	id?: string;
 	placeholder?: string;
 }
@@ -87,7 +88,9 @@ function handleKeydown(evt: KeyboardEvent) {
 					{opt}
 				</button>
 			{:else}
-				<div class="text-sm text-gray-500 italic">No previously saved projects</div>
+				<div class="text-sm text-gray-500 italic">
+					{empty}
+				</div>
 			{/each}
 		</div>
 	{/if}

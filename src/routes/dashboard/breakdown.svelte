@@ -48,7 +48,7 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 		editing = false;
 		entry = undefined;
 	} catch (_err) {
-		toast.error('Something went wrong while trying to update your entry');
+		toast.error(m.breakdown_edit_error());
 	}
 }
 </script>
@@ -130,6 +130,7 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 					placeholder={m.project_select_placeholder()}
 					options={projects}
 					initialValue={entry?.project}
+					empty={m.project_autocomplete_empty()}
 					{...updateEntry.fields.data.project.as('text')} />
 			</div>
 		</form>

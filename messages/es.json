@@ -10,6 +10,7 @@
 	"add_entry_button": "Guardar",
 	"project_select_placeholder": "Proyecto",
 	"project_select_empty": "No proyectos",
+	"project_autocomplete_empty": "No proyectos guardados",
 	"breakdown_hours_worked": "Horas trabajadas",
 	"breakdown_last_month": "Mes pasado",
 	"breakdown_this_month": "Este mes",
@@ -29,6 +30,7 @@
 	"breakdown_edit_title": "Editar entrada",
 	"breakdown_edit_cancel": "Cancelar",
 	"breakdown_edit_save": "Guardar",
+	"breakdown_edit_error": "Encontramos un error intentando actualizar tu entrada",
 	"record_start_label": "Recordar una sesión",
 	"record_stop_label": "Terminar sesión actual",
 	"record_confirm_title": "Trabajaste {sessionLength} horas",
@@ -36,6 +38,7 @@
 	"record_confirm_project": "¿Agregar sesión a un proyecto?",
 	"record_confirm_discard": "Descartar",
 	"record_confirm_save": "Guardar",
+	"record_save_error": "Encontramos un error intentando guardar tu sesión",
 	"schema_hours": "Por favor entra las horas que trabajaste",
 	"error_generic_message": "Encontramos un error procesando tu solicitud. Por favor cantáctanos si crees que algo está mal",
 	"error_generic_action": "Contactar"

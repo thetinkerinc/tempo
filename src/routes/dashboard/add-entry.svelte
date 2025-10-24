@@ -26,6 +26,7 @@ let projects = $derived(await getProjects());
 		<Autocomplete
 			placeholder="Project"
 			options={projects}
+			empty={m.project_autocomplete_empty()}
 			{...addEntry.fields.project.as('text')} />
 	</div>
 	<div>

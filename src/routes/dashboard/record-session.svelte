@@ -87,7 +87,7 @@ async function enhance({ form, submit }: AddEntryEnhanceParams) {
 		form.reset();
 		clear();
 	} catch (_err) {
-		toast.error('Something went wrong while trying to save your session');
+		toast.error(m.record_save_error());
 	}
 }
 

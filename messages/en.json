@@ -10,6 +10,7 @@
 	"add_entry_button": "Save",
 	"project_select_placeholder": "Project",
 	"project_select_empty": "No projects",
+	"project_autocomplete_empty": "No previously saved projects",
 	"breakdown_hours_worked": "Hours worked",
 	"breakdown_last_month": "Last month",
 	"breakdown_this_month": "This month",
@@ -29,6 +30,7 @@
 	"breakdown_edit_title": "Edit entry",
 	"breakdown_edit_cancel": "Cancel",
 	"breakdown_edit_save": "Save",
+	"breakdown_edit_error": "Something went wrong while trying to update your entry",
 	"record_start_label": "Record a session",
 	"record_stop_label": "Finish current session",
 	"record_confirm_title": "You worked {sessionLength} hours",
@@ -36,6 +38,7 @@
 	"record_confirm_project": "Save session to a project?",
 	"record_confirm_discard": "Discard",
 	"record_confirm_save": "Save",
+	"record_save_error": "Something went wrong while trying to save your session",
 	"schema_hours": "Please specify the number of hours worked",
 	"error_generic_message": "We encountered an issue while processing your request. Please reach out if you think something is wrong",
 	"error_generic_action": "Contact"
