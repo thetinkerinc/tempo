@@ -9,7 +9,7 @@ import { qp } from '$utils/state';
 import utils from '$utils/general';
 
 import * as m from '$paraglide/messages';
-import { getEntries, getProjects, updateEntry } from './data.remote';
+import { getEntries, getProjects, updateEntry, deleteEntry } from './data.remote';
 import schema from './schema';
 
 import { ScrollArea } from '$components/ui/scroll-area';
@@ -17,6 +17,7 @@ import * as AlertDialog from '$components/ui/alert-dialog';
 import DatePicker from '$components/date-picker.svelte';
 import HoursPicker from '$components/hours-picker.svelte';
 import Autocomplete from '$components/autocomplete.svelte';
+import { Button } from '$components/ui/button';
 
 import DateRange from './date-range.svelte';
 import CustomDateRange from './custom-date-range.svelte';
@@ -41,7 +42,7 @@ function edit(e: Entry) {
 	};
 }
 
-async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
+async function enhance({ form, submit }: UpdateEntryEnhanceParams | DeleteEntryEnhanceParams) {
 	try {
 		await submit();
 		form.reset();
@@ -134,7 +135,18 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams) {
 					{...updateEntry.fields.data.project.as('text')} />
 			</div>
 		</form>
+		<form id="delete-entry" class="hidden" {...deleteEntry.enhance(enhance)}>
+			<input {...deleteEntry.fields.id.as('text')} value={entry?.id} />
+		</form>
 		<AlertDialog.Footer>
+			<div class="flex-auto">
+				<Button
+					variant="destructive"
+					form="delete-entry"
+					{...deleteEntry.buttonProps.enhance(enhance)}>
+					Delete
+				</Button>
+			</div>
 			<AlertDialog.Cancel>{m.breakdown_edit_cancel()}</AlertDialog.Cancel>
 			<AlertDialog.Action form="update-entry" {...updateEntry.buttonProps.enhance(enhance)}>
 				{m.breakdown_edit_save()}

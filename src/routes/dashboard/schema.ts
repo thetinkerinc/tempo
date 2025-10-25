@@ -24,8 +24,13 @@ const updateEntry = v.object({
 	data: entry
 });
 
+const deleteEntry = v.object({
+	id: v.string()
+});
+
 export default {
 	entry,
 	getEntries,
-	updateEntry
+	updateEntry,
+	deleteEntry
 };

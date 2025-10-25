@@ -57,11 +57,21 @@ export const addEntry = protectedForm(schema.entry, async ({ userId, data }) => 
 	});
 });
 
-export const updateEntry = protectedForm(schema.updateEntry, async ({ data }) => {
+export const updateEntry = protectedForm(schema.updateEntry, async ({ userId, data }) => {
 	await prisma.entry.update({
 		where: {
+			user: userId,
 			id: data.id
 		},
 		data: data.data
+	});
+});
+
+export const deleteEntry = protectedForm(schema.deleteEntry, async ({ userId, data }) => {
+	await prisma.entry.delete({
+		where: {
+			user: userId,
+			id: data.id
+		}
 	});
 });

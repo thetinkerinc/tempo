@@ -50,8 +50,7 @@ function select(opt?: string) {
 			evt.preventDefault();
 			value = opt;
 		};
-	}
-	else {
+	} else {
 		value = options[highlighted];
 		open = false;
 		console.log(elem);
