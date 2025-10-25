@@ -41,11 +41,22 @@ function changeHighlighted(delta: number) {
 	}
 }
 
-function select() {
-	value = options[highlighted];
-	open = false;
-	console.log(elem);
-	elem?.blur();
+function select(): void;
+function select(opt: string): (evt: MouseEvent) => void;
+function select(opt?: string) {
+	if (opt) {
+		return (evt: MouseEvent) => {
+			evt.stopPropagation();
+			evt.preventDefault();
+			value = opt;
+		};
+	}
+	else {
+		value = options[highlighted];
+		open = false;
+		console.log(elem);
+		elem?.blur();
+	}
 }
 
 function handleKeydown(evt: KeyboardEvent) {
@@ -67,7 +78,6 @@ function handleKeydown(evt: KeyboardEvent) {
 
 <div class="relative">
 	<Input
-		type="text"
 		autocomplete="off"
 		onfocus={() => (open = true)}
 		onblur={close}
@@ -84,7 +94,7 @@ function handleKeydown(evt: KeyboardEvent) {
 				<button
 					class={['rounded px-3 py-1 text-left text-sm hover:bg-gray-100', hl && 'bg-gray-100']}
 					tabindex="-1"
-					onclick={() => (value = opt)}>
+					onclick={select(opt)}>
 					{opt}
 				</button>
 			{:else}
