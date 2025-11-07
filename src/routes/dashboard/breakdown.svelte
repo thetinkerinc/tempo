@@ -5,12 +5,11 @@ import dayjs from 'dayjs';
 import { toast } from 'svelte-sonner';
 import * as _ from 'radashi';
 
-import { qp } from '$utils/state';
 import utils from '$utils/general';
 
 import * as m from '$paraglide/messages';
-import { getEntries, getProjects, updateEntry, deleteEntry } from './data.remote';
-import schema from './schema';
+import { getEntries, getProjects, updateEntry, deleteEntry } from '$remote/entry.remote';
+import schema from '$remote/entry.schema';
 
 import { ScrollArea } from '$components/ui/scroll-area';
 import * as AlertDialog from '$components/ui/alert-dialog';
@@ -28,7 +27,7 @@ import type { Entry } from '$utils/prisma';
 let editing = $state<boolean>(false);
 let entry = $state<Entry>();
 
-let entries = $derived(await getEntries(qp()));
+let entries = $derived(await getEntries());
 let projects = $derived(await getProjects());
 let start = $derived(utils.getDate(page.url, 'start'));
 let end = $derived(utils.getDate(page.url, 'end'));

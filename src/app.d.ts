@@ -2,7 +2,7 @@
 
 import type { Local } from '@thetinkerinc/isolocal';
 
-import * as remote from '$routes/dashboard/data.remote';
+import * as remote from '$remote/entry.remote';
 
 declare global {
 	type AddEntryEnhanceParams = Parameters<Parameters<typeof remote.addEntry.enhance>[0]>[0];

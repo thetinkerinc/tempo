@@ -1,7 +1,7 @@
 <script lang="ts">
 import * as m from '$paraglide/messages';
-import { getProjects, addEntry } from './data.remote';
-import schema from './schema';
+import { getProjects, addEntry } from '$remote/entry.remote';
+import schema from '$remote/entry.schema';
 
 import DatePicker from '$components/date-picker.svelte';
 import HoursPicker from '$components/hours-picker.svelte';

@@ -1,9 +1,11 @@
+import { getRequestEvent } from '$app/server';
 import * as _ from 'radashi';
 
 import { protectedQuery, protectedForm } from '$utils/auth';
 import { prisma } from '$utils/prisma';
+import utils from '$utils/general';
 
-import schema from './schema';
+import schema from './entry.schema';
 
 import type { Prisma } from '$utils/prisma';
 
@@ -25,19 +27,24 @@ export const getProjects = protectedQuery(async ({ userId }) => {
 	return _.sift(resp.map((p) => p.project));
 });
 
-export const getEntries = protectedQuery(schema.getEntries, async ({ userId, params }) => {
+export const getEntries = protectedQuery(async ({ userId }) => {
+	const event = getRequestEvent();
+	const start = utils.getDate(event.url, 'start');
+	const end = utils.getDate(event.url, 'end');
+	const project = event.url.searchParams.get('project');
+
 	const where: Prisma.EntryWhereInput = {
 		user: {
 			equals: userId
 		},
 		date: {
-			gte: params.start,
-			lte: params.end
+			gte: start,
+			lte: end
 		}
 	};
-	if (params.project) {
+	if (project) {
 		where.project = {
-			equals: params.project
+			equals: project
 		};
 	}
 	return await prisma.entry.findMany({

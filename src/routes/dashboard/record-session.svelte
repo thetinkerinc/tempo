@@ -6,8 +6,8 @@ import * as _ from 'radashi';
 import { Pause, Play } from '@lucide/svelte';
 
 import * as m from '$paraglide/messages';
-import { getProjects, addEntry } from './data.remote';
-import schema from './schema';
+import { getProjects, addEntry } from '$remote/entry.remote';
+import schema from '$remote/entry.schema';
 
 import * as AlertDialog from '$components/ui/alert-dialog';
 import Autocomplete from '$components/autocomplete.svelte';

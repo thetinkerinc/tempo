@@ -4,7 +4,7 @@ import { page } from '$app/state';
 import navigation from '$utils/navigation';
 
 import * as m from '$paraglide/messages';
-import { getProjects } from './data.remote';
+import { getProjects } from '$remote/entry.remote';
 
 import * as Select from '$components/ui/select';
 
