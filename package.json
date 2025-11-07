@@ -61,7 +61,7 @@
 		"@prisma/client": "^6.19.0",
 		"@prisma/extension-accelerate": "^2.0.2",
 		"@thetinkerinc/isolocal": "^0.1.1",
-		"dayjs": "^1.11.19",
+		"date-fns": "^4.1.0",
 		"radashi": "^12.7.0",
 		"svelte-clerk": "^0.17.8",
 		"valibot": "^1.1.0"

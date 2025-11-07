@@ -1,24 +1,28 @@
 <script lang="ts">
 import { ClerkProvider } from 'svelte-clerk';
-import { enUS, esMX } from '@clerk/localizations';
+import { setDefaultOptions } from 'date-fns';
+import { enUS as clerkEn, esMX as clerkEs } from '@clerk/localizations';
+import { enUS as dateEn, es as dateEs } from 'date-fns/locale';
 import { getLocale } from '$paraglide/runtime';
-import dayjs from 'dayjs';
 
 import { Toaster } from '$components/ui/sonner';
 
 import Header from './header.svelte';
 import Metaballs from './metaballs.svelte';
 
-import 'dayjs/locale/es';
-
 import '../app.css';
 
 let { children } = $props();
 
-dayjs.locale(getLocale());
+setDefaultOptions({
+	locale: {
+		en: dateEn,
+		es: dateEs
+	}[getLocale()]
+});
 const clerkLocale = {
-	en: enUS,
-	es: esMX
+	en: clerkEn,
+	es: clerkEs
 }[getLocale()];
 </script>
 
