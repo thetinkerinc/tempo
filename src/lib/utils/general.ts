@@ -1,4 +1,4 @@
-import { startOfMonth, endOfMonth } from 'date-fns';
+import * as date from 'date-fns';
 
 function getDate(url: URL, name: 'start' | 'end'): Date {
 	const dateString = url.searchParams.get(name);
@@ -6,8 +6,8 @@ function getDate(url: URL, name: 'start' | 'end'): Date {
 		return new Date(dateString);
 	}
 	return {
-		start: startOfMonth(new Date()),
-		end: endOfMonth(new Date())
+		start: date.startOfMonth(new Date()),
+		end: date.endOfMonth(new Date())
 	}[name];
 }
 

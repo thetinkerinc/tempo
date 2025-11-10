@@ -1,7 +1,7 @@
 <script lang="ts">
 import { flip } from 'svelte/animate';
 import { page } from '$app/state';
-import { format, subMonths, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
+import * as date from 'date-fns';
 import { toast } from 'svelte-sonner';
 import * as _ from 'radashi';
 
@@ -55,9 +55,9 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams | DeleteEntryE
 
 <div class="text-xl font-bold">{m.breakdown_hours_worked()}: {hoursWorked}</div>
 <div class="flex items-center gap-2">
-	<div>{format(start, 'MMM d, yyyy')}</div>
+	<div>{date.format(start, 'MMM d, yyyy')}</div>
 	<div>-</div>
-	<div>{format(end, 'MMM d, yyyy')}</div>
+	<div>{date.format(end, 'MMM d, yyyy')}</div>
 </div>
 <div class="my-2 flex flex-wrap items-center gap-1">
 	<DateRange>
@@ -65,14 +65,14 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams | DeleteEntryE
 	</DateRange>
 	<DateRange
 		period="last-month"
-		start={startOfMonth(subMonths(new Date(), 1)).toISOString()}
-		end={endOfMonth(subMonths(new Date(), 1)).toISOString()}>
+		start={date.startOfMonth(date.subMonths(new Date(), 1)).toISOString()}
+		end={date.endOfMonth(date.subMonths(new Date(), 1)).toISOString()}>
 		{m.breakdown_last_month()}
 	</DateRange>
 	<DateRange
 		period="ytd"
-		start={startOfYear(new Date()).toISOString()}
-		end={endOfYear(new Date()).toISOString()}>
+		start={date.startOfYear(new Date()).toISOString()}
+		end={date.endOfYear(new Date()).toISOString()}>
 		{m.breakdown_ytd()}
 	</DateRange>
 	<CustomDateRange />
@@ -90,7 +90,7 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams | DeleteEntryE
 				<div class="grid grid-cols-[auto_1fr] gap-6">
 					<div>
 						<div class="flex items-center gap-4">
-							<div>{format(entry.date, 'eeee, MMM d')}</div>
+							<div>{date.format(entry.date, 'eeee, MMM d')}</div>
 							<div>-</div>
 							<div>{m.breakdown_entry_hours({ hours: entry.hours })}</div>
 						</div>

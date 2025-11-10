@@ -1,7 +1,8 @@
 <script lang="ts">
 let { initialValue, ...rest }: Props = $props();
 
-import { format } from 'date-fns';
+import * as date from 'date-fns';
+
 import { parseAbsoluteToLocal, now, getLocalTimeZone } from '@internationalized/date';
 import { CalendarDays } from '@lucide/svelte';
 
@@ -48,7 +49,7 @@ function getInitialValue() {
 		{#snippet child({ props })}
 			<Button class="flex items-center gap-2" variant="outline" {...props}>
 				<CalendarDays />
-				<div>{format(value || new Date(), 'eee, MMM d')}</div>
+				<div>{date.format(value || new Date(), 'eee, MMM d')}</div>
 			</Button>
 		{/snippet}
 	</Popover.Trigger>
