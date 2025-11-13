@@ -44,7 +44,6 @@
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.7.1",
-		"prisma": "^6.19.0",
 		"svelte": "^5.43.6",
 		"svelte-check": "^4.3.4",
 		"svelte-sonner": "^1.0.6",
@@ -57,16 +56,17 @@
 		"vite": "^7.2.2"
 	},
 	"dependencies": {
-		"@clerk/localizations": "^3.27.2",
-		"@inlang/paraglide-js": "^2.4.0",
+		"@clerk/localizations": "^3.28.0",
+		"@inlang/paraglide-js": "^2.5.0",
 		"@neondatabase/serverless": "^1.0.2",
 		"@prisma/adapter-neon": "^6.19.0",
 		"@prisma/client": "^6.19.0",
 		"@prisma/extension-accelerate": "^2.0.2",
 		"@thetinkerinc/isolocal": "^0.1.1",
 		"date-fns": "^4.1.0",
+		"prisma": "^6.19.0",
 		"radashi": "^12.7.0",
-		"svelte-clerk": "^0.17.9",
+		"svelte-clerk": "^0.17.10",
 		"valibot": "^1.1.0",
 		"ws": "^8.18.3"
 	}

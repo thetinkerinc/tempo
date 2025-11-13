@@ -1,12 +1,16 @@
-import { withAccelerate } from '@prisma/extension-accelerate';
+import ws from 'ws';
+import { PrismaNeon } from '@prisma/adapter-neon';
+import { neonConfig } from '@neondatabase/serverless';
 import { DATABASE_URL } from '$env/static/private';
 
 import { PrismaClient } from '$prisma/client';
 
 export type * from '$prisma/client';
 
-const prisma = new PrismaClient({
-	datasourceUrl: DATABASE_URL
-}).$extends(withAccelerate());
+neonConfig.webSocketConstructor = ws;
+neonConfig.poolQueryViaFetch = true;
+
+const adapter = new PrismaNeon({ connectionString: DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 export { prisma };
