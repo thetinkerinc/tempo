@@ -13,15 +13,11 @@
 	"observability": {
 		"enabled": true
 	},
-	"env": {
-		"production": {
-			"vars": {
-				"PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_live_Y2xlcmsudGVtcG8udGhldGlua2VyaW5jLmNvbSQ",
-				"PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL": "/dashboard",
-				"PUBLIC_CLERK_SIGN_IN_URL": "/login",
-				"PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL": "/dashboard",
-				"PUBLIC_CLERK_SIGN_UP_URL": "/signup"
-			}
-		}
+	"vars": {
+		"PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_live_Y2xlcmsudGVtcG8udGhldGlua2VyaW5jLmNvbSQ",
+		"PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL": "/dashboard",
+		"PUBLIC_CLERK_SIGN_IN_URL": "/login",
+		"PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL": "/dashboard",
+		"PUBLIC_CLERK_SIGN_UP_URL": "/signup"
 	}
 }
