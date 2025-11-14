@@ -5,9 +5,9 @@ import { neonConfig } from '@neondatabase/serverless';
 import { dev } from '$app/environment';
 import { DATABASE_URL } from '$env/static/private';
 
-import { PrismaClient } from '@prisma/client/edge';
+import { PrismaClient } from '@prisma/client';
 
-export type * from '@prisma/client/edge';
+export type * from '@prisma/client';
 
 let prisma: PrismaClient;
 
