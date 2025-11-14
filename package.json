@@ -22,7 +22,7 @@
 		"cf-typegen": "wrangler types src/worker-configuration.d.ts"
 	},
 	"devDependencies": {
-		"@eslint/compat": "^1.4.1",
+		"@eslint/compat": "^2.0.0",
 		"@eslint/js": "^9.39.1",
 		"@internationalized/date": "^3.10.0",
 		"@lucide/svelte": "^0.553.0",
