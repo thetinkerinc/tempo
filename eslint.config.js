@@ -19,7 +19,8 @@ export default ts.config(
 			'dbschema/',
 			'src/lib/paraglide/',
 			'.trigger/',
-			'.netlify'
+			'.netlify',
+			'src/worker-configuration.d.ts'
 		]
 	},
 	includeIgnoreFile(gitignorePath),
