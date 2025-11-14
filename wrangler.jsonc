@@ -1,6 +1,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "my-svelte-app",
+	"name": "tempo",
+	"main": ".svelte-kit/cloudflare/_worker.js",
 	"compatibility_date": "2025-11-13",
 	"compatibility_flags": ["nodejs_compat"],
 	"assets": {
