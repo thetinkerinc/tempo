@@ -1,5 +1,5 @@
-//import pg from 'pg';
-//import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaNeon } from '@prisma/adapter-neon';
 import { neonConfig } from '@neondatabase/serverless';
 import { dev } from '$app/environment';
@@ -12,13 +12,10 @@ export type * from '$prisma/client';
 let prisma: PrismaClient;
 
 if (dev) {
-	/*
 	const pool = new pg.Pool({ connectionString: DATABASE_URL });
 	const adapter = new PrismaPg(pool);
 	prisma = new PrismaClient({ adapter });
-	*/
-}
-else {
+} else {
 	neonConfig.webSocketConstructor = WebSocket;
 	neonConfig.poolQueryViaFetch = true;
 

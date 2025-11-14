@@ -10,11 +10,11 @@ declare global {
 	type DeleteEntryEnhanceParams = Parameters<Parameters<typeof remote.deleteEntry.enhance>[0]>[0];
 
 	namespace App {
-        interface Platform {
-            env: Env
-            cf: CfProperties
-            ctx: ExecutionContext
-        }
+		interface Platform {
+			env: Env;
+			cf: CfProperties;
+			ctx: ExecutionContext;
+		}
 		interface Locals {
 			localStorage: Local & {
 				sessionStarted?: number;
