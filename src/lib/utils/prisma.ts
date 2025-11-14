@@ -1,6 +1,5 @@
-//import ws from 'ws';
-import pg from 'pg';
-import { PrismaPg } from '@prisma/adapter-pg';
+//import pg from 'pg';
+//import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaNeon } from '@prisma/adapter-neon';
 import { neonConfig } from '@neondatabase/serverless';
 import { dev } from '$app/environment';
@@ -10,18 +9,16 @@ import { PrismaClient } from '$prisma/client';
 
 export type * from '$prisma/client';
 
-console.log('setting up prisma');
-
 let prisma: PrismaClient;
 
 if (dev) {
-	console.log('dev mode');
+	/*
 	const pool = new pg.Pool({ connectionString: DATABASE_URL });
 	const adapter = new PrismaPg(pool);
 	prisma = new PrismaClient({ adapter });
+	*/
 }
 else {
-	console.log('production');
 	neonConfig.webSocketConstructor = WebSocket;
 	neonConfig.poolQueryViaFetch = true;
 
