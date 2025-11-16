@@ -45,7 +45,7 @@
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.7.1",
-		"svelte": "^5.43.6",
+		"svelte": "^5.43.8",
 		"svelte-check": "^4.3.4",
 		"svelte-sonner": "^1.0.6",
 		"tailwind-merge": "^3.4.0",
@@ -55,7 +55,7 @@
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.46.4",
 		"vite": "^7.2.2",
-		"wrangler": "^4.48.0"
+		"wrangler": "^4.47.0"
 	},
 	"dependencies": {
 		"@clerk/localizations": "^3.28.0",
@@ -70,7 +70,7 @@
 		"pg": "^8.16.3",
 		"prisma": "^6.19.0",
 		"radashi": "^12.7.0",
-		"svelte-clerk": "^0.17.10",
+		"svelte-clerk": "^0.18.1",
 		"valibot": "^1.1.0",
 		"ws": "^8.18.3"
 	}
