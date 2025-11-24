@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "run-p dev:*",
+		"dev": "dotenvx run -- run-p dev:*",
 		"dev:web": "vite dev",
 		"dev:db": "prisma dev -n tempo -P 4000 -p 4001",
 		"dev:schema": "prisma generate --watch",
@@ -22,6 +22,7 @@
 		"cf-typegen": "wrangler types src/worker-configuration.d.ts"
 	},
 	"devDependencies": {
+		"@dotenvx/dotenvx": "^1.51.1",
 		"@eslint/compat": "^2.0.0",
 		"@eslint/js": "^9.39.1",
 		"@internationalized/date": "^3.10.0",
@@ -63,6 +64,7 @@
 		"@neondatabase/serverless": "^1.0.2",
 		"@prisma/adapter-neon": "^7.0.0",
 		"@prisma/adapter-pg": "^7.0.0",
+		"@prisma/adapter-ppg": "^7.0.0",
 		"@prisma/client": "^7.0.0",
 		"@prisma/extension-accelerate": "^3.0.0",
 		"@thetinkerinc/isolocal": "^0.1.1",
