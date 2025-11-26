@@ -2,14 +2,8 @@ datasource db {
   provider = "postgresql"
 }
 
-generator dev {
+generator client {
   provider = "prisma-client"
-  output = "../src/generated"
-}
-
-generator prod {
-  provider = "prisma-client"
-  runtime = "workerd"
   output = "../src/generated"
 }
 

@@ -7,10 +7,10 @@
 		"dev": "dotenvx run -- run-p dev:*",
 		"dev:web": "vite dev",
 		"dev:db": "prisma dev -n tempo -P 4000 -p 4001",
-		"dev:schema": "prisma generate --generator dev --watch",
+		"dev:schema": "prisma generate --watch",
 		"build": "run-s build:prisma build:migrate build:web",
 		"build:web": "vite build",
-		"build:prisma": "prisma generate --generator prod",
+		"build:prisma": "prisma generate",
 		"build:migrate": "prisma migrate deploy",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync",
@@ -56,6 +56,8 @@
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.48.0",
 		"vite": "^7.2.4",
+		"vite-plugin-ignore-dynamic-imports": "^1.0.2",
+		"vite-plugin-wasm": "^3.5.0",
 		"wrangler": "^4.50.0"
 	},
 	"dependencies": {
