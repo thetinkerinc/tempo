@@ -9,7 +9,7 @@ generator dev {
 
 generator prod {
   provider = "prisma-client"
-  runtime = "cloudflare"
+  runtime = "workerd"
   output = "../src/generated"
 }
 
