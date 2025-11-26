@@ -1,5 +1,4 @@
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaPostgresAdapter } from '@prisma/adapter-ppg';
 import { PrismaNeon } from '@prisma/adapter-neon';
 import { neonConfig } from '@neondatabase/serverless';
 import { dev } from '$app/environment';
@@ -12,8 +11,12 @@ export type * from '$prisma/client';
 let prisma: PrismaClient;
 
 if (dev) {
-	const adapter = new PrismaPostgresAdapter({
-		connectionString: DATABASE_URL
+	const adapter = new PrismaPg({
+		connectionString: DATABASE_URL,
+		ssl: false,
+		max: 1,
+		connectionTimeoutMillis: 0,
+		idleTimeoutMillis: 1
 	});
 	prisma = new PrismaClient({ adapter });
 } else {

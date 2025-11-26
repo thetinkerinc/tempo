@@ -15,7 +15,6 @@ import type { DateValue } from '@internationalized/date';
 interface Props {
 	initialValue?: string;
 	name: string;
-	type: 'text';
 }
 
 let value = $state<string>(initialValue ?? '');
