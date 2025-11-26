@@ -65,6 +65,7 @@
 		"@prisma/adapter-neon": "^7.0.1",
 		"@prisma/adapter-pg": "^7.0.1",
 		"@prisma/client": "^7.0.1",
+		"@thetinkerinc/commander": "^0.0.2",
 		"@thetinkerinc/isolocal": "^0.1.1",
 		"date-fns": "^4.1.0",
 		"prisma": "^7.0.1",
