@@ -5,27 +5,27 @@ import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
+
 import svelteConfig from './svelte.config.js';
 
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
-export default ts.config(
+export default defineConfig(
 	{
 		ignores: [
 			'build/',
 			'.svelte-kit/',
 			'dist/',
 			'src/lib/components/ui/',
-			'dbschema/',
 			'src/lib/paraglide/',
 			'.trigger/',
-			'.netlify',
 			'src/worker-configuration.d.ts'
 		]
 	},
 	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
-	...ts.configs.recommended,
+	ts.configs.recommended,
 	...svelte.configs.recommended,
 	prettier,
 	...svelte.configs.prettier,

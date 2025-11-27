@@ -2,7 +2,6 @@ import { getRequestEvent } from '$app/server';
 import * as _ from 'radashi';
 
 import { Authenticated } from '$utils/commanders';
-
 import { prisma } from '$utils/prisma';
 import utils from '$utils/general';
 
