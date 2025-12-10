@@ -3,7 +3,7 @@ import * as v from 'valibot';
 import * as m from '$paraglide/messages';
 
 const entry = v.object({
-	date: v.pipe(v.string(), v.isoTimestamp()),
+	date: v.pipe(v.string(), v.isoTimestamp(), v.toDate()),
 	hours: v.pipe(v.number(), v.gtValue(0, m.schema_hours())),
 	project: v.optional(
 		v.pipe(

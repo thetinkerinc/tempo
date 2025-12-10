@@ -22,7 +22,7 @@ import DateRange from './date-range.svelte';
 import CustomDateRange from './custom-date-range.svelte';
 import ProjectSelect from './project-select.svelte';
 
-import type { Entry } from '$utils/prisma';
+import type { Entry } from '$utils/drizzle';
 
 let editing = $state<boolean>(false);
 let entry = $state<Entry>();

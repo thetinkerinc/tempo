@@ -2,29 +2,24 @@ import { getRequestEvent } from '$app/server';
 import * as _ from 'radashi';
 
 import { Authenticated } from '$utils/commanders';
-import { prisma } from '$utils/prisma';
+import { db, schema as dbSchema, eq, and } from '$utils/drizzle';
 import utils from '$utils/general';
 
-import schema from './entry.schema';
-
-import type { Prisma } from '$utils/prisma';
+import fnSchema from './entry.schema';
 
 export const getProjects = Authenticated.query(async ({ ctx }) => {
-	const resp = await prisma.entry.findMany({
+	const resp = await db.query.entries.findMany({
 		where: {
-			user: {
-				equals: ctx
-			},
+			user: ctx,
 			project: {
-				not: null
+				isNotNull: true
 			}
 		},
-		distinct: ['project'],
-		select: {
+		columns: {
 			project: true
 		}
 	});
-	return _.sift(resp.map((p) => p.project));
+	return _.unique(_.sift(resp.map((p) => p.project)));
 });
 
 export const getEntries = Authenticated.query(async ({ ctx }) => {
@@ -33,21 +28,20 @@ export const getEntries = Authenticated.query(async ({ ctx }) => {
 	const end = utils.getDate(event.url, 'end');
 	const project = event.url.searchParams.get('project');
 
-	const where: Prisma.EntryWhereInput = {
-		user: {
-			equals: ctx
-		},
+	type EntryWhere = WhereOf<typeof db.query.entries.findMany>;
+
+	const where: EntryWhere = {
+		user: ctx,
 		date: {
 			gte: start,
 			lte: end
 		}
 	};
 	if (project) {
-		where.project = {
-			equals: project
-		};
+		where.project = project;
 	}
-	return await prisma.entry.findMany({
+
+	return await db.query.entries.findMany({
 		where,
 		orderBy: {
 			date: 'desc'
@@ -55,30 +49,24 @@ export const getEntries = Authenticated.query(async ({ ctx }) => {
 	});
 });
 
-export const addEntry = Authenticated.form(schema.entry, async ({ ctx, data }) => {
-	await prisma.entry.create({
-		data: {
-			user: ctx,
-			...data
-		}
+export const addEntry = Authenticated.form(fnSchema.entry, async ({ ctx, data }) => {
+	await db.insert(dbSchema.entries).values({
+		...data,
+		user: ctx
 	});
 });
 
-export const updateEntry = Authenticated.form(schema.updateEntry, async ({ ctx, data }) => {
-	await prisma.entry.update({
-		where: {
-			user: ctx,
-			id: data.id
-		},
-		data: data.data
-	});
+export const updateEntry = Authenticated.form(fnSchema.updateEntry, async ({ ctx, data }) => {
+	await db
+		.update(dbSchema.entries)
+		.set({
+			...data.data
+		})
+		.where(and(eq(dbSchema.entries.user, ctx), eq(dbSchema.entries.id, data.id)));
 });
 
-export const deleteEntry = Authenticated.form(schema.deleteEntry, async ({ ctx, data }) => {
-	await prisma.entry.delete({
-		where: {
-			user: ctx,
-			id: data.id
-		}
-	});
+export const deleteEntry = Authenticated.form(fnSchema.deleteEntry, async ({ ctx, data }) => {
+	await db
+		.delete(dbSchema.entries)
+		.where(and(eq(dbSchema.entries.user, ctx), eq(dbSchema.entries.id, data.id)));
 });
