@@ -2,23 +2,19 @@ import { getRequestEvent } from '$app/server';
 import * as _ from 'radashi';
 
 import { Authenticated } from '$utils/commanders';
-import { db, schema as dbSchema, eq, and } from '$utils/drizzle';
+import { db } from '$utils/db';
 import utils from '$utils/general';
 
-import fnSchema from './entry.schema';
+import schema from './entry.schema';
 
 export const getProjects = Authenticated.query(async ({ ctx }) => {
-	const resp = await db.query.entries.findMany({
-		where: {
-			user: ctx,
-			project: {
-				isNotNull: true
-			}
-		},
-		columns: {
-			project: true
-		}
-	});
+	const resp = await db
+		.selectFrom('entries')
+		.where('user', '=', ctx)
+		.where('project', 'is not', null)
+		.select(['project'])
+		.distinct()
+		.execute();
 	return _.unique(_.sift(resp.map((p) => p.project)));
 });
 
@@ -28,45 +24,38 @@ export const getEntries = Authenticated.query(async ({ ctx }) => {
 	const end = utils.getDate(event.url, 'end');
 	const project = event.url.searchParams.get('project');
 
-	type EntryWhere = WhereOf<typeof db.query.entries.findMany>;
-
-	const where: EntryWhere = {
-		user: ctx,
-		date: {
-			gte: start,
-			lte: end
-		}
-	};
-	if (project) {
-		where.project = project;
-	}
-
-	return await db.query.entries.findMany({
-		where,
-		orderBy: {
-			date: 'desc'
-		}
-	});
+	return await db
+		.selectFrom('entries')
+		.selectAll()
+		.where('user', '=', ctx)
+		.where('date', '>=', start)
+		.where('date', '<=', end)
+		.$if(project != null, (q) => q.where('project', '=', project))
+		.orderBy('date', 'desc')
+		.execute();
 });
 
-export const addEntry = Authenticated.form(fnSchema.entry, async ({ ctx, data }) => {
-	await db.insert(dbSchema.entries).values({
-		...data,
-		user: ctx
-	});
-});
-
-export const updateEntry = Authenticated.form(fnSchema.updateEntry, async ({ ctx, data }) => {
+export const addEntry = Authenticated.form(schema.entry, async ({ ctx, data }) => {
 	await db
-		.update(dbSchema.entries)
+		.insertInto('entries')
+		.values({
+			...data,
+			user: ctx
+		})
+		.execute();
+});
+
+export const updateEntry = Authenticated.form(schema.updateEntry, async ({ ctx, data }) => {
+	await db
+		.updateTable('entries')
 		.set({
 			...data.data
 		})
-		.where(and(eq(dbSchema.entries.user, ctx), eq(dbSchema.entries.id, data.id)));
+		.where('id', '=', data.id)
+		.where('user', '=', ctx)
+		.execute();
 });
 
-export const deleteEntry = Authenticated.form(fnSchema.deleteEntry, async ({ ctx, data }) => {
-	await db
-		.delete(dbSchema.entries)
-		.where(and(eq(dbSchema.entries.user, ctx), eq(dbSchema.entries.id, data.id)));
+export const deleteEntry = Authenticated.form(schema.deleteEntry, async ({ ctx, data }) => {
+	await db.deleteFrom('entries').where('id', '=', data.id).where('user', '=', ctx).execute();
 });
