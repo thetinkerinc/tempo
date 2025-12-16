@@ -1,7 +1,6 @@
 import * as k from 'kysely';
 import { NeonDialect } from 'kysely-neon';
-import { neon } from '@neondatabase/serverless';
-import { types } from 'pg';
+import { neon, types } from '@neondatabase/serverless';
 import { dev } from '$app/environment';
 import { DATABASE_URL } from '$env/static/private';
 
