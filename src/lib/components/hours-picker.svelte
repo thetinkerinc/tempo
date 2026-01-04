@@ -13,6 +13,7 @@ interface Props {
 	onchange?: (val: number) => void;
 }
 
+// svelte-ignore state_referenced_locally
 let value = $state<number>(initialValue ?? 0);
 let atStart = $state<boolean>(true);
 let atEnd = $state<boolean>(false);

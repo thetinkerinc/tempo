@@ -17,6 +17,7 @@ interface Props {
 	name: string;
 }
 
+// svelte-ignore state_referenced_locally
 let value = $state<string>(initialValue ?? '');
 let selectedDate = $state<DateValue>(getInitialValue());
 

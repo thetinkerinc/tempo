@@ -1,7 +1,6 @@
 <script lang="ts">
 import { page } from '$app/state';
-
-import navigation from '$utils/navigation';
+import { updateSearch } from '@thetinkerinc/sprout/navigation';
 
 import * as m from '$paraglide/messages';
 import { getProjects } from '$remote/entry.remote';
@@ -13,7 +12,7 @@ let value = $state<string | undefined>(page.url.searchParams.get('project') ?? u
 
 async function handleProject(project: string) {
 	open = false;
-	await navigation.updateSearch({
+	await updateSearch({
 		project
 	});
 }

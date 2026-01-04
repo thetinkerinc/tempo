@@ -5,11 +5,10 @@ import type { Local } from '@thetinkerinc/isolocal';
 import * as remote from '$remote/entry.remote';
 
 declare global {
-	type WhereOf<T> = NonNullable<Parameters<T>[0]> extends { where?: infer W } ? W : never;
-
-	type AddEntryEnhanceParams = Parameters<Parameters<typeof remote.addEntry.enhance>[0]>[0];
-	type UpdateEntryEnhanceParams = Parameters<Parameters<typeof remote.updateEntry.enhance>[0]>[0];
-	type DeleteEntryEnhanceParams = Parameters<Parameters<typeof remote.deleteEntry.enhance>[0]>[0];
+	type EnhanceParams<T> = Parameters<Parameters<T>[0]>[0];
+	type AddEntryEnhanceParams = EnhanceParams<typeof remote.addEntry.enhance>;
+	type UpdateEntryEnhanceParams = EnhanceParams<typeof remote.updateEntry.enhance>;
+	type DeleteEntryEnhanceParams = EnhanceParams<typeof remote.deleteEntry.enhance>;
 
 	namespace App {
 		interface Platform {

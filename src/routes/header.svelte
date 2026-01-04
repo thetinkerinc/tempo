@@ -5,18 +5,14 @@ import { resolve } from '$app/paths';
 import { Earth } from '@lucide/svelte';
 
 import * as m from '$paraglide/messages';
-import { getLocale, setLocale } from '$paraglide/runtime';
+import { getLocale, setLocale, locales } from '$paraglide/runtime';
 
 import * as Select from '$components/ui/select';
 import { Button } from '$components/ui/button';
 
-type Locale = 'en' | 'es';
+import type { Locale } from '$paraglide/runtime';
 
 const ctx = useClerkContext();
-
-function handleLocale(l: string) {
-	setLocale(l as Locale);
-}
 
 async function logout() {
 	await ctx.clerk?.signOut();
@@ -37,7 +33,7 @@ async function logout() {
 			<a class="hover:underline" href={resolve('/login')}>{m.header_login()}</a>
 			<a class="hover:underline" href={resolve('/signup')}>{m.header_signup()}</a>
 		</SignedOut>
-		<Select.Root type="single" value={getLocale()} onValueChange={handleLocale}>
+		<Select.Root type="single" value={getLocale()} onValueChange={(l) => setLocale(l as Locale)}>
 			<Select.Trigger>
 				{#snippet child({ props })}
 					<Button
@@ -49,8 +45,9 @@ async function logout() {
 				{/snippet}
 			</Select.Trigger>
 			<Select.Content>
-				<Select.Item value="en">en</Select.Item>
-				<Select.Item value="es">es</Select.Item>
+				{#each locales as l}
+					<Select.Item value={l}>{l}</Select.Item>
+				{/each}
 			</Select.Content>
 		</Select.Root>
 	</div>

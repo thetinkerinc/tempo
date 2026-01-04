@@ -13,6 +13,7 @@ interface Props {
 	placeholder?: string;
 }
 
+// svelte-ignore state_referenced_locally
 let value = $state<string | null | undefined>(initialValue);
 let elem = $state<HTMLInputElement | null>(null);
 let open = $state<boolean>(false);

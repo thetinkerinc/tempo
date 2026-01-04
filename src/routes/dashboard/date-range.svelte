@@ -2,8 +2,7 @@
 let { period, start, end, children }: Props = $props();
 
 import { page } from '$app/state';
-
-import navigation from '$utils/navigation';
+import { updateSearch } from '@thetinkerinc/sprout/navigation';
 
 import { Button } from '$components/ui/button';
 
@@ -20,7 +19,7 @@ let selectedPeriod = $derived(page.url.searchParams.get('period'));
 let variant = $derived<'default' | 'outline'>(selectedPeriod == period ? 'default' : 'outline');
 
 async function handleDates() {
-	await navigation.updateSearch({
+	await updateSearch({
 		period,
 		start,
 		end

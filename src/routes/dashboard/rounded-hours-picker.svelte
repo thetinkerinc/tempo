@@ -5,6 +5,7 @@ import * as m from '$paraglide/messages';
 
 import { Button } from '$components/ui/button';
 
+// svelte-ignore state_referenced_locally
 let value = $state(hours);
 
 let floor = $derived<number>(Math.floor(hours));

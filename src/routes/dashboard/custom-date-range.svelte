@@ -1,8 +1,7 @@
 <script lang="ts">
 import { page } from '$app/state';
 import { getLocalTimeZone } from '@internationalized/date';
-
-import navigation from '$utils/navigation';
+import { updateSearch } from '@thetinkerinc/sprout/navigation';
 
 import * as m from '$paraglide/messages';
 
@@ -21,7 +20,7 @@ async function setDateRange(range: DateRange) {
 	}
 	const start = range.start.toDate(getLocalTimeZone()).toISOString();
 	const end = range.end.toDate(getLocalTimeZone()).toISOString();
-	await navigation.updateSearch({
+	await updateSearch({
 		period: 'custom',
 		start,
 		end
