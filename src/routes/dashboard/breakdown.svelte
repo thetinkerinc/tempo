@@ -139,15 +139,10 @@ async function enhance({ form, submit }: UpdateEntryEnhanceParams | DeleteEntryE
 		</form>
 		<AlertDialog.Footer>
 			<div class="flex-auto">
-				<Button
-					variant="destructive"
-					form="delete-entry"
-					{...deleteEntry.buttonProps.enhance(enhance)}>
-					Delete
-				</Button>
+				<Button variant="destructive" form="delete-entry" type="submit">Delete</Button>
 			</div>
 			<AlertDialog.Cancel>{m.breakdown_edit_cancel()}</AlertDialog.Cancel>
-			<AlertDialog.Action form="update-entry" {...updateEntry.buttonProps.enhance(enhance)}>
+			<AlertDialog.Action form="update-entry" type="submit">
 				{m.breakdown_edit_save()}
 			</AlertDialog.Action>
 		</AlertDialog.Footer>

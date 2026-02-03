@@ -30,6 +30,6 @@ let projects = $derived(await getProjects());
 			{...addEntry.fields.project.as('text')} />
 	</div>
 	<div>
-		<Button {...addEntry.buttonProps}>{m.add_entry_button()}</Button>
+		<Button type="submit">{m.add_entry_button()}</Button>
 	</div>
 </form>

@@ -151,7 +151,7 @@ function clear() {
 		</form>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel onclick={clear}>{m.record_confirm_discard()}</AlertDialog.Cancel>
-			<AlertDialog.Action {...form.buttonProps.enhance(enhance)} form="add-recorded-session">
+			<AlertDialog.Action form="add-recorded-session" type="submit">
 				{m.record_confirm_save()}
 			</AlertDialog.Action>
 		</AlertDialog.Footer>
