@@ -1,5 +1,5 @@
 <script lang="ts">
-import { SignedIn, SignedOut } from 'svelte-clerk';
+import { Show } from 'svelte-clerk';
 import { useClerkContext } from 'svelte-clerk/client';
 import { resolve } from '$app/paths';
 import { Earth } from '@lucide/svelte';
@@ -26,13 +26,13 @@ async function logout() {
 		</a>
 	</div>
 	<div class="flex items-center gap-4 font-bold">
-		<SignedIn>
+		<Show when="signed-in">
 			<button class="cursor-pointer hover:underline" onclick={logout}>{m.header_logout()}</button>
-		</SignedIn>
-		<SignedOut>
+		</Show>
+		<Show when="signed-out">
 			<a class="hover:underline" href={resolve('/login')}>{m.header_login()}</a>
 			<a class="hover:underline" href={resolve('/signup')}>{m.header_signup()}</a>
-		</SignedOut>
+		</Show>
 		<Select.Root type="single" value={getLocale()} onValueChange={(l) => setLocale(l as Locale)}>
 			<Select.Trigger>
 				{#snippet child({ props })}
